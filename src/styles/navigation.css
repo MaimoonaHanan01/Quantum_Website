@@ -30,12 +30,17 @@
 
 .nav-link {
   color: rgba(255, 255, 255, 0.92) !important;
-  @apply block px-4 py-2 my-1.5 rounded-full cursor-pointer font-semibold transition text-sm;
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.22s ease,
+    color 0.22s ease,
+    box-shadow 0.22s ease;
+  @apply block px-4 py-2 my-1.5 rounded-full cursor-pointer font-semibold text-sm;
 }
 
 .nav-link:hover {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.18);
   color: #ffffff !important;
+  transform: translateY(-1.5px);
 }
 
 .nav-link.active {

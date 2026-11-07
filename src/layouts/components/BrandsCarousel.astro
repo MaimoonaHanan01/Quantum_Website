@@ -20,19 +20,21 @@ const quantumEcosystem = [
 
 {
   brandsData.enable && (
-    <section class="section-sm pt-14 xl:pt-18">
+    <section class="section-sm pt-14 xl:pt-18 overflow-hidden">
       <div class="container">
         <div class="text-center mb-8">
           <p class="text-text text-base font-medium" set:html={brandsData.title} />
         </div>
-        <div class="flex gap-4 xl:gap-5 flex-wrap justify-center items-center">
-          {quantumEcosystem.map((item) => (
-            <div class="clay-card px-5 py-3 rounded-2xl flex items-center gap-3">
-              <span class="size-8 rounded-xl clay-feature-wave grid place-items-center text-xs font-bold text-primary">
+      </div>
+      <div class="q-marquee-wrap relative w-full overflow-hidden py-3">
+        <div class="q-marquee-track flex gap-5 w-max items-center">
+          {[...quantumEcosystem, ...quantumEcosystem].map((item) => (
+            <div class="clay-card px-5 py-3.5 rounded-2xl flex items-center gap-3.5 shrink-0 cursor-pointer group">
+              <span class="size-9 rounded-xl clay-feature-wave grid place-items-center text-xs font-bold text-primary transition-transform duration-300 group-hover:scale-115 group-hover:rotate-6">
                 Q
               </span>
               <div class="text-left leading-tight">
-                <div class="text-sm font-bold text-dark">{item.label}</div>
+                <div class="text-sm font-bold text-dark transition-colors duration-200 group-hover:text-primary">{item.label}</div>
                 <div class="text-[11px] text-text-dark">{item.sub}</div>
               </div>
             </div>

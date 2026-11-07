@@ -415,5 +415,69 @@ ul.green-tick-list {
 
 .footer-link {
   color: var(--ink-2);
-  @apply hover:text-primary font-medium transition-colors duration-200;
+  display: inline-block;
+  transition: color 0.22s ease, transform 0.22s ease;
+  @apply hover:text-primary font-medium;
+}
+
+.footer-link:hover {
+  transform: translateX(4px);
+}
+
+/* SaaS Marquee & Hover Micro-Interactions */
+@keyframes qMarquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.q-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: qMarquee 26s linear infinite;
+  will-change: transform;
+}
+
+.q-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+.feature-items-group > * {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s ease;
+  cursor: default;
+}
+
+.feature-items-group > *:hover {
+  transform: translateY(-4px) scale(1.03);
+  border-color: rgba(93, 138, 119, 0.45) !important;
+  box-shadow: 0 12px 24px -8px rgba(93, 138, 119, 0.22),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.95);
+}
+
+.blob-message {
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.28s ease;
+}
+
+.blob-message:hover {
+  transform: translateY(-5px) scale(1.015);
+  border-color: rgba(93, 138, 119, 0.4);
+  box-shadow: var(--clay-md);
+}
+
+ul.stars-list li,
+ul.green-tick-list li {
+  transition: transform 0.22s ease, color 0.22s ease;
+}
+
+ul.stars-list li:hover,
+ul.green-tick-list li:hover {
+  transform: translateX(5px);
+  color: var(--ink);
 }
