@@ -1,0 +1,90 @@
+---
+import ImageMod from "@/layouts/components/ImageMod.astro";
+import { getListPage } from "@/lib/contentParser.astro";
+import type { OurStorySection } from "@/types";
+
+const ourStoryEntry = await getListPage("ourStorySection", "our-story");
+const ourStoryData: OurStorySection = ourStoryEntry.data;
+if (!ourStoryData.enable) return;
+---
+
+<section class="section overflow-hidden">
+  <div class="container">
+    <div class="section-container">
+      <div class="section-intro centralize">
+        <h2
+          class="title hasHighlight lg:col-8 mx-auto"
+          set:html={ourStoryData.title}
+        />
+      </div>
+      <div class="section-content">
+        <div class="relative max-w-220 mx-auto clay-card p-8 py-14 xl:px-16 rounded-[36px]">
+          <div
+            class="flex flex-col items-center text-center lg:max-w-3xl mx-auto"
+          >
+            <div>
+              <div class="size-20 rounded-3xl clay-feature-wave grid place-items-center mb-5 mx-auto">
+                <img
+                  width="48"
+                  height="48"
+                  class="size-11 object-contain"
+                  src="/images/favicon.png"
+                  alt={ourStoryData.ceo.name}
+                />
+              </div>
+              <p class="text-dark font-bold text-lg">
+                {ourStoryData.ceo.name}
+              </p>
+              <p class="text-text-dark text-sm">{ourStoryData.ceo.role}</p>
+            </div>
+            <div class="text-base mt-8 mb-10 text-left mx-auto text-text leading-relaxed">
+              <div set:html={ourStoryData.letter} />
+            </div>
+
+            {
+              ourStoryData.letter_points &&
+                ourStoryData.letter_points.length > 0 && (
+                  <>
+                    <div class="text-base text-dark font-bold text-center mb-6">
+                      {ourStoryData.letter_points_title ??
+                        "Core Engine Principles:"}
+                    </div>
+                    <div class="flex flex-col gap-y-4 relative vertical-bg-line w-full max-w-md">
+                      {ourStoryData.letter_points.map((point) => (
+                        <div class="clay-card px-8 w-full py-3 rounded-full flex items-center justify-center relative z-10 gap-x-2">
+                          <span class="font-semibold text-dark text-base">
+                            {point}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )
+            }
+
+            {
+              ourStoryData.closing_content && (
+                <p class="mt-10 text-base text-text-dark">{ourStoryData.closing_content}</p>
+              )
+            }
+
+            {
+              ourStoryData.button &&
+                ourStoryData.button.enable &&
+                ourStoryData.button.link && (
+                  <div class="mt-8 flex justify-center">
+                    <a
+                      href={ourStoryData.button.link}
+                      class="btn btn-primary"
+                    >
+                      {ourStoryData.button.label}
+                    </a>
+                  </div>
+                )
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

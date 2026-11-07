@@ -1,0 +1,39 @@
+{
+  "site": {
+    "title": "Quantum",
+    "base_url": "https://maxvapor-tax.vercel.app",
+    "base_path": "/",
+    "trailing_slash": false,
+    "favicon": "/images/favicon.png",
+    "logo": "/images/quantum-logo-600.png",
+    "logo_width": "154",
+    "logo_height": "40",
+    "logo_text": "Quantum"
+  },
+  "settings": {
+    "sticky_header": true
+  },
+  "params": {
+    "contact_form_action": "#",
+    "checklist_form_action": "#",
+    "apply_form_action": "#",
+    "copyright": "Copyright &copy; 2026 <strong>Quantum Tax Engine</strong>. All Rights Reserved.",
+    "footer_tagline": "Multi-state sales tax, vapor excise, and PACT Act automation.",
+    "footer_email": "ops@maxvapor.com",
+    "footer_phone": "(+1) 800-555-0199"
+  },
+  "navigation_button": {
+    "enable": true,
+    "label": "Open Quantum App",
+    "link": "https://maxvapor-tax.vercel.app/"
+  },
+  "google_tag_manager": {
+    "enable": false,
+    "gtm_id": "GTM-XXXXXX"
+  },
+  "metadata": {
+    "meta_author": "Quantum",
+    "meta_image": "/images/quantum-dashboard-live.jpg",
+    "meta_description": "Multi-state sales tax, vapor excise, and PACT Act filing engine."
+  }
+}

@@ -1,0 +1,22 @@
+---
+import ImageMod from "@/layouts/components/ImageMod.astro";
+interface Props {
+  logo: string;
+  title: string;
+  content: string;
+}
+const { logo, title, content } = Astro.props;
+---
+
+<div
+  class="p-8 xl:px-10 xl:py-11 clay-card flex flex-col items-center text-center"
+>
+  <div class="size-14 rounded-2xl bg-white/80 grid place-items-center mb-6 shadow-sm">
+    <ImageMod src={logo} alt={`${title} icon`} class="size-7" />
+  </div>
+  <h3 class="text-h5-sm font-bold font-secondary text-dark">{title}</h3>
+  <div class="w-px h-8 my-4 bg-primary/35"></div>
+  <p class="text-text">
+    {content}
+  </p>
+</div>

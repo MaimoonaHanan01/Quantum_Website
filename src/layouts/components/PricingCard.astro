@@ -1,0 +1,134 @@
+---
+import PricingCheckout from "./PricingCheckout";
+
+interface Feature {
+  label: string;
+  included: boolean;
+  tooltip?: string;
+}
+interface Props {
+  price: string;
+  yearly_price: string;
+  title: string;
+  is_featured?: boolean;
+  offer_text?: string;
+  button: { enable: boolean; label: string; link: string };
+  description?: string;
+  features?: Feature[];
+}
+const {
+  price,
+  yearly_price,
+  title,
+  is_featured = false,
+  offer_text,
+  button,
+  description,
+  features,
+} = Astro.props;
+---
+
+<div
+  class={`py-10 px-8 rounded-[28px] text-left relative ${is_featured ? "clay-feature-wave overflow-hidden" : "clay-card"}`}
+>
+  {
+    is_featured && (
+      <div class="absolute top-8 right-6 transform bg-white/85 text-dark border border-dark/20 text-xs font-bold py-1.5 px-3.5 rounded-full shadow-sm">
+        {offer_text ?? "Most Popular"}
+      </div>
+    )
+  }
+
+  <div class="mb-8 leading-none relative">
+    <span class="text-dark text-h3 font-bold price-tag opacity-0">I</span>
+    <span
+      class="text-dark text-h3 font-bold price-tag absolute left-0 top-0"
+      data-price-tag-monthly
+    >
+      ${price}
+      <span class="ml-1 text-sm text-text-dark font-medium transition-all duration-300"
+        >/ month</span
+      >
+    </span>
+    <span
+      class="text-dark text-h3 font-bold price-tag opacity-0 absolute left-0 top-0"
+      data-price-tag-yearly
+    >
+      ${yearly_price}
+      <span class="ml-0.5 text-sm text-text-dark font-medium transition-all duration-300"
+        >/ year</span
+      >
+    </span>
+  </div>
+
+  <h3 class="text-h5-sm font-bold text-dark mb-3">{title}</h3>
+  <p class="text-text-dark mb-6">{description}</p>
+
+  {
+    button.enable && (
+      <PricingCheckout
+        client:load
+        planTitle={title}
+        monthlyPrice={price}
+        yearlyPrice={yearly_price}
+        buttonLabel={button.label}
+        isFeatured={is_featured}
+      />
+    )
+  }
+
+  <div class="text-dark font-bold mb-5 mt-2">Included in {title}</div>
+
+  <ul class="space-y-3.5">
+    {
+      (features || []).map((f) => (
+        <li class="flex items-start gap-x-3.5">
+          {f.included ? (
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="shrink-0 mt-0.5"
+            >
+              <rect width="24" height="24" rx="7" fill="var(--color-primary)" />
+              <path
+                d="M11.1799 15.6864L17.6989 8.82757C18.1004 8.40902 18.1004 7.73247 17.6989 7.31392C17.2974 6.89536 16.6484 6.89536 16.2468 7.31392L10.4539 13.4159L7.75315 10.5847C7.35164 10.1661 6.70265 10.1661 6.30113 10.5847C5.89962 11.0032 5.89962 11.6798 6.30113 12.0983L9.72792 15.6864C9.92816 15.8951 10.191 16 10.4539 16C10.7168 16 10.9797 15.8951 11.1799 15.6864Z"
+                fill="white"
+              />
+            </svg>
+          ) : (
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="shrink-0 mt-0.5"
+            >
+              <rect
+                opacity="0.2"
+                width="24"
+                height="24"
+                rx="7"
+                fill="var(--color-dark)"
+              />
+              <rect
+                x="18"
+                y="11"
+                width="2"
+                height="12"
+                rx="1"
+                transform="rotate(90 18 11)"
+                fill="var(--color-dark)"
+                fill-opacity="0.5"
+              />
+            </svg>
+          )}
+          <span class="text-text font-medium">{f.label}</span>
+        </li>
+      ))
+    }
+  </ul>
+</div>

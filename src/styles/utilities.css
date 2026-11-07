@@ -1,0 +1,60 @@
+@utility container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+@utility bg-gradient {
+  @apply bg-linear-to-b from-border from-[0.53%] to-transparent to-[83.28%];
+}
+
+/* form style — pressed into the clay */
+@utility form-input {
+  @apply w-full rounded-2xl border border-transparent px-6 py-4 text-dark placeholder:text-text-dark focus:ring-transparent;
+  background: #efe7dd;
+  box-shadow: var(--pressed);
+}
+
+@utility form-label {
+  @apply mb-3 block font-secondary text-base font-semibold text-dark;
+}
+
+@utility corner-squircle {
+  corner-shape: squircle;
+}
+
+@utility gradient-border {
+  background:
+    linear-gradient(var(--color-light), var(--color-light)) padding-box,
+    linear-gradient(to right, #6c9886, #4c7889) border-box;
+  border-radius: 16px;
+  border: 3px solid transparent;
+  animation: gradientAnimation 3s ease infinite;
+  background-size: 200% 200%;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@utility hoverAnimationDuration {
+  animation-duration: 8s;
+
+  &:hover {
+    animation-duration: 4s;
+  }
+}
+
+@utility link {
+  color: var(--ink);
+  @apply hover:text-primary font-semibold transition-colors duration-200 underline;
+}

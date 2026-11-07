@@ -1,0 +1,26 @@
+---
+enable: true
+badge: ""
+title: "The 5 Pillars of <strong>Deterministic Filing</strong>"
+items:
+  - image: "/images/brands-group-1.png"
+    number: "01"
+    title: "INGEST"
+    content: "Stream multi-megabyte Avalara ZIP exports and Shopify orders in 400-row idempotent batches with zero duplicates."
+  - image: "/images/brands-group-2.png"
+    number: "02"
+    title: "DEDUPE"
+    content: "Deduplicate gross sales strictly on the state-level row while aggregating county, city, and special district tax."
+  - image: "/images/brands-group-3.png"
+    number: "03"
+    title: "EXCISE"
+    content: "Compute wholesale percentage, per-mL liquid volume, and bifurcated open/closed vapor excise automatically."
+  - image: "/images/brands-group-4.png"
+    number: "04"
+    title: "RECONCILE"
+    content: "Verify Taxable + Exempt = Gross to $0.00 tolerance and surface collected vs computed deltas."
+  - image: "/images/brands-group-5.png"
+    number: "05"
+    title: "FILE"
+    content: "Download the 5-tab Excel workbook, dispatch PACT Act emails, and record portal confirmation numbers."
+---

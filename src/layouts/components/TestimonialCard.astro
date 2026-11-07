@@ -1,0 +1,39 @@
+---
+interface Props {
+  poster: string;
+  content?: string;
+  name?: string;
+  designation?: string;
+  video?: string;
+}
+const { content, name, designation } = Astro.props;
+---
+
+<div class="clay-card p-8 rounded-[28px] flex flex-col justify-between h-full">
+  <div>
+    <div class="text-primary mb-5">
+      <svg
+        width="34"
+        height="22"
+        viewBox="0 0 45 28"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M15.3955 0V10.9561H24.8691L16.5791 28H0L13.0264 0H15.3955ZM36.7109 0V10.9561H45L36.7109 28H21.3154L34.3418 0H36.7109Z"
+          fill="currentColor"
+        />
+      </svg>
+    </div>
+    <p class="text-dark text-base font-medium leading-relaxed">
+      "{content}"
+    </p>
+  </div>
+  <div>
+    <hr class="border-border my-6" />
+    <div>
+      <p class="text-dark font-bold">{name}</p>
+      <p class="text-text-dark text-sm">{designation}</p>
+    </div>
+  </div>
+</div>

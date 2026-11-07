@@ -1,0 +1,47 @@
+---
+interface Props {
+  image: string;
+  number: string;
+  title: string;
+  content: string;
+}
+const { number, title, content } = Astro.props;
+
+const pillarBadges: Record<string, { tag: string; metric: string }> = {
+  "01": { tag: "Avalara ZIP · Shopify · Purchases", metric: "400-Row Stream" },
+  "02": { tag: "Composite Key (DocID, Line, SKU)", metric: "State-Row Dedupe" },
+  "03": { tag: "Wholesale % · $/mL · Open/Closed", metric: "445 SKU Check" },
+  "04": { tag: "Taxable + Exempt = Gross", metric: "$0.00 Tolerance" },
+  "05": { tag: "5-Tab Excel + PACT Carrier Email", metric: "Portal Ready" },
+};
+const info = pillarBadges[number] ?? { tag: "Quantum Engine", metric: "Verified" };
+---
+
+<div class="p-8 xl:px-20 xl:py-7 relative" data-bn-card={number}>
+  <div class="flex items-center flex-col lg:flex-row lg:justify-between gap-6">
+    <div class="clay-feature-wave px-5 py-3.5 rounded-2xl flex flex-col items-start min-w-62 max-lg:order-1">
+      <span class="text-xs font-bold uppercase tracking-wider text-primary">
+        {info.metric}
+      </span>
+      <span class="text-sm font-semibold text-dark mt-1">
+        {info.tag}
+      </span>
+    </div>
+    <div class="relative grid place-items-center max-lg:order-0">
+      <div
+        class="text-[4.5rem] lg:text-[88px] font-extrabold t-stroke text-transparent leading-none"
+      >
+        {number}
+      </div>
+      <h3 class="text-h5-sm font-bold absolute text-dark">{title}</h3>
+    </div>
+    <p class="lg:col-4 text-sm max-lg:my-4 max-lg:order-3 text-text">{content}</p>
+  </div>
+  <div class="absolute inset-0 size-full -z-10">
+    <div
+      class="clay-card size-full rounded-3xl"
+      style="transform: perspective(100px) rotateX(-1deg);"
+    >
+    </div>
+  </div>
+</div>

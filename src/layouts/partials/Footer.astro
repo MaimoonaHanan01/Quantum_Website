@@ -1,0 +1,116 @@
+---
+import Social from "@/components/Social.astro";
+import config from "@/config/config.json";
+import menu from "@/config/menu.json";
+import social from "@/config/social.json";
+import { markdownify } from "@/lib/utils/textConverter";
+import type { Menu, SocialType } from "@/types";
+
+const {
+  footer_primary,
+  footer_resource,
+  footer_legal,
+  footer_col_1_title,
+  footer_col_2_title,
+  footer_col_3_title,
+} = menu as Menu;
+const { main: socialLinks } = social as SocialType;
+---
+
+<footer class="section pb-0 relative overflow-hidden">
+  <div class="container pb-10">
+    <div class="flex lg:justify-between flex-wrap gap-x-10 gap-y-10">
+      <!-- Column 1 - Logo & Contact -->
+      <div class="max-w-95 mb-14 text-base text-text">
+        <a
+          href="/"
+          class="inline-flex items-center gap-3 px-4 py-2.5 rounded-2xl"
+          style="background: linear-gradient(165deg, #6c9886 0%, #5a8673 45%, #4c7889 100%); border: 1px solid rgba(255, 255, 255, 0.55); box-shadow: 6px 10px 20px rgba(76, 100, 92, 0.25), -3px -3px 10px rgba(255, 255, 255, 0.7), inset 1px 1px 2px rgba(255, 255, 255, 0.35);"
+        >
+          <img
+            src="/images/quantum-mark-white-256.png"
+            width="32"
+            height="32"
+            class="size-8 object-contain shrink-0"
+            alt="Quantum"
+          />
+          <span class="flex flex-col leading-tight text-left">
+            <span class="text-[16px] font-bold tracking-tight text-white">
+              Quantum
+            </span>
+            <span class="whitespace-nowrap text-[11px] font-normal text-white/80">
+              Sales tax calculator
+            </span>
+          </span>
+        </a>
+        <p class="mt-5 text-text">{config.params.footer_tagline}</p>
+        <a
+          class="link mt-5 inline-block underline"
+          href={`mailto:${config.params.footer_email}`}
+          >{config.params.footer_email}</a
+        >
+      </div>
+      <!-- Column 2 - Primary -->
+      <div>
+        <h3 class="footer-label">{footer_col_1_title}</h3>
+        <ul>
+          {
+            footer_primary?.map((item) => (
+              <li class="mb-4">
+                <a href={item.url} class="footer-link">
+                  {item.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <!-- Column 3 - Resource -->
+      <div>
+        <h3 class="footer-label">{footer_col_2_title}</h3>
+        <ul>
+          {
+            footer_resource?.map((item) => (
+              <li class="mb-4">
+                <a href={item.url} class="footer-link">
+                  {item.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <!-- Column 4 - Legal -->
+      <div>
+        <h3 class="footer-label">{footer_col_3_title}</h3>
+        <ul>
+          {
+            footer_legal?.map((item) => (
+              <li class="mb-4">
+                <a href={item.url} class="footer-link">
+                  {item.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- Bottom Area -->
+  <hr
+    class="h-px bg-linear-to-r from-transparent from-15% via-border to-85% to-transparent border-0"
+  />
+  <div class="container py-7">
+    <div
+      class="flex justify-between lg:items-center flex-col lg:flex-row gap-y-6 w-full"
+    >
+      <p
+        class="text-sm text-text-dark"
+        set:html={markdownify(config.params.copyright)}
+      />
+
+      <Social className="social-icons lg:ml-auto" source={socialLinks} />
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,44 @@
+---
+import { getListPage } from "@/lib/contentParser.astro";
+import type { BrandsSection } from "@/types";
+
+const brandsInfo = await getListPage("brandsSection", "brands");
+const brandsData: BrandsSection = brandsInfo.data;
+if (!brandsData.enable) return;
+
+const quantumEcosystem = [
+  { label: "Avalara AvaTax ZIP", sub: "LineDetail Ingest" },
+  { label: "Shopify Orders", sub: "Storefront Sync" },
+  { label: "PrestaShop", sub: "Order Export" },
+  { label: "WA DOR", sub: "95% Wholesale" },
+  { label: "CA CDTFA", sub: "65.08% Excise" },
+  { label: "IL MyTax TP-1", sub: "45% Wholesale" },
+  { label: "AK PACT Act", sub: "Carrier Dispatch" },
+  { label: "5-Tab Workbook", sub: "Portal Excel" },
+];
+---
+
+{
+  brandsData.enable && (
+    <section class="section-sm pt-14 xl:pt-18">
+      <div class="container">
+        <div class="text-center mb-8">
+          <p class="text-text text-base font-medium" set:html={brandsData.title} />
+        </div>
+        <div class="flex gap-4 xl:gap-5 flex-wrap justify-center items-center">
+          {quantumEcosystem.map((item) => (
+            <div class="clay-card px-5 py-3 rounded-2xl flex items-center gap-3">
+              <span class="size-8 rounded-xl clay-feature-wave grid place-items-center text-xs font-bold text-primary">
+                Q
+              </span>
+              <div class="text-left leading-tight">
+                <div class="text-sm font-bold text-dark">{item.label}</div>
+                <div class="text-[11px] text-text-dark">{item.sub}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

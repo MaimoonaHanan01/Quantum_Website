@@ -1,0 +1,81 @@
+{
+  "main": [
+    {
+      "name": "Features",
+      "url": "/features"
+    },
+    {
+      "name": "Pricing",
+      "url": "/pricing"
+    },
+    {
+      "name": "Integrations",
+      "url": "/integrations"
+    },
+    {
+      "name": "Case Studies",
+      "url": "/case-study"
+    },
+    {
+      "name": "Contact",
+      "url": "/contact"
+    }
+  ],
+  "footer_col_1_title": "Platform",
+  "footer_col_2_title": "Modules",
+  "footer_col_3_title": "Compliance",
+  "footer_primary": [
+    {
+      "name": "Dashboard",
+      "url": "https://maxvapor-tax.vercel.app/"
+    },
+    {
+      "name": "Features",
+      "url": "/features"
+    },
+    {
+      "name": "Pricing",
+      "url": "/pricing"
+    },
+    {
+      "name": "Integrations",
+      "url": "/integrations"
+    },
+    {
+      "name": "Contact",
+      "url": "/contact"
+    }
+  ],
+  "footer_resource": [
+    {
+      "name": "Monthly Workbooks",
+      "url": "https://maxvapor-tax.vercel.app//months"
+    },
+    {
+      "name": "Returns & Portals",
+      "url": "https://maxvapor-tax.vercel.app//returns"
+    },
+    {
+      "name": "PACT Act Emails",
+      "url": "https://maxvapor-tax.vercel.app//pact"
+    },
+    {
+      "name": "SKU Catalog",
+      "url": "https://maxvapor-tax.vercel.app//products"
+    },
+    {
+      "name": "Case Studies",
+      "url": "/case-study"
+    }
+  ],
+  "footer_legal": [
+    {
+      "name": "Privacy Policy",
+      "url": "/privacy-policy"
+    },
+    {
+      "name": "Terms and Conditions",
+      "url": "/term-and-condition"
+    }
+  ]
+}

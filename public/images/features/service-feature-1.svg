@@ -1,0 +1,16 @@
+<svg width="520" height="320" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="12" y="12" width="496" height="296" rx="28" fill="#FAF6F1" stroke="#FFFFFF" stroke-width="3"/>
+  <rect x="36" y="36" width="448" height="84" rx="18" fill="#5D8A77" fill-opacity="0.14"/>
+  <circle cx="74" cy="78" r="20" fill="#5D8A77"/>
+  <text x="67" y="84" fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold">Q</text>
+  <text x="110" y="72" fill="#22332D" font-family="sans-serif" font-size="20" font-weight="bold">Deterministic Reconciliation</text>
+  <text x="110" y="96" fill="#5D8A77" font-family="sans-serif" font-size="13" font-weight="600">State-Row Gross Deduplication  |  $0.00 Tolerance</text>
+  <rect x="36" y="142" width="214" height="64" rx="14" fill="#EFE7DD"/>
+  <text x="54" y="168" fill="#6E695F" font-family="sans-serif" font-size="12">November 2026 Liability</text>
+  <text x="54" y="192" fill="#22332D" font-family="sans-serif" font-size="20" font-weight="bold">$1,381.91</text>
+  <rect x="268" y="142" width="216" height="64" rx="14" fill="#EFE7DD"/>
+  <text x="286" y="168" fill="#6E695F" font-family="sans-serif" font-size="12">Reconciliation Delta</text>
+  <text x="286" y="192" fill="#5D8A77" font-family="sans-serif" font-size="20" font-weight="bold">$0.00 Verified</text>
+  <rect x="36" y="224" width="448" height="52" rx="14" fill="#5D8A77"/>
+  <text x="260" y="255" text-anchor="middle" fill="#FFFFFF" font-family="sans-serif" font-size="14" font-weight="bold">Quantum Deterministic Compliance Engine</text>
+</svg>

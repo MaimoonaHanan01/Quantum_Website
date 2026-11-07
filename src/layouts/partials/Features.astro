@@ -1,0 +1,41 @@
+---
+import FeatureCard from "@/components/FeatureCard.astro";
+import type { OurFeaturesSection } from "@/types";
+
+interface Props {
+  our_features: OurFeaturesSection;
+}
+
+const { our_features } = Astro.props;
+---
+
+<section class="section-box mx-5 relative isolate overflow-hidden">
+  <div class="container">
+    <div class="section-container">
+      <div class="section-intro centralize">
+        <h2 class="title hasHighlight" set:html={our_features.title} />
+        <p class="subtitle">{our_features.content}</p>
+      </div>
+      <div class="section-content">
+        <div
+          class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 border-r border-text-light/5 border-b"
+        >
+          {
+            our_features.items.map((item) => (
+              <FeatureCard
+                logo={item.logo}
+                title={item.title}
+                is_starred={item.is_starred}
+              />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="absolute inset-x-0 bottom-0 h-80 -z-10 pointer-events-none"
+    style="background: radial-gradient(ellipse at 50% 100%, rgba(157, 191, 174, 0.32) 0%, transparent 70%);"
+  >
+  </div>
+</section>

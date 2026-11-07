@@ -1,0 +1,224 @@
+---
+import config from "@/config/config.json";
+import Base from "@/layouts/Base.astro";
+import CallToAction from "@/layouts/components/CallToAction.astro";
+import Faq from "@/layouts/components/Faq.astro";
+import PageHeader from "@/layouts/components/PageHeader.astro";
+import GHLMeeting from "@/layouts/partials/GHLMeeting.astro";
+import { getListPage } from "@/lib/contentParser.astro";
+import DynamicIcon from "@/helpers/DynamicIcon";
+import type { Contact } from "@/types";
+
+const contact = await getListPage("contact", "-index");
+const contactData: Contact = contact.data;
+const {
+  params: { contact_form_action: _unused },
+} = config;
+---
+
+<Base {...contactData}>
+  <PageHeader
+    title={contactData.page_header!.title}
+    subtitle={contactData.page_header!.subtitle}
+  />
+
+  <!-- Contact Section -->
+  <section class="section pt-0">
+    <div class="container">
+      <div class="row g-7 max-lg:gap-5">
+        <!-- Left Column - Contact Cards -->
+        <div class="col-12 lg:col-5">
+          <div class="flex flex-col gap-5">
+            {
+              contactData.contact_info?.enable &&
+                contactData.contact_info.items.map((item) => {
+                  const Container = item.type === "calendar" ? "div" : "a";
+                  const href = item.link || (item.type === "email" ? `mailto:${item.detail}` : item.type === "phone" ? `tel:${item.detail}` : undefined);
+                  
+                  return (
+                    <Container
+                      href={Container === "a" ? href : undefined}
+                      class={`flex flex-col gap-5 p-7 md:p-8 clay-card rounded-3xl cursor-pointer transition-all duration-300 group`}
+                      data-ghl-trigger={item.type === "calendar" ? "true" : undefined}
+                    >
+                    <div class="w-12 h-12 rounded-2xl bg-white/80 flex items-center justify-center shadow-sm transition-transform duration-300 group-hover:scale-110">
+                      <DynamicIcon
+                        icon={item.icon ?? ""}
+                        className="w-6 h-6 text-primary"
+                      />
+                    </div>
+                    <div class="flex flex-col gap-2">
+                      <h3 class="font-secondary font-bold text-2xl text-dark">
+                        {item.title}
+                      </h3>
+                      <p class="text-text text-lg">{item.detail}</p>
+                    </div>
+                    </Container>
+                  );
+                })
+            }
+          </div>
+        </div>
+
+        <!-- Right Column - Contact Form -->
+        <div class="col-12 lg:col-7">
+          <div class="p-8 md:p-10 clay-card rounded-3xl">
+            <form id="contact-form" novalidate class="flex flex-col gap-8">
+              <div class="flex flex-col gap-5">
+                <div class="relative">
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Name"
+                    required
+                    class="form-input"
+                  />
+                </div>
+                <div class="relative">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Work Email Address"
+                    required
+                    class="form-input"
+                  />
+                </div>
+                <div class="relative">
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="Phone Number"
+                    required
+                    class="form-input"
+                  />
+                </div>
+                <div class="relative">
+                  <textarea
+                    name="message"
+                    placeholder="Tell us about your active filing states..."
+                    rows={4}
+                    required
+                    class="form-input resize-none"
+                  ></textarea>
+                </div>
+              </div>
+              <div class="flex flex-col gap-6">
+                <!-- Status messages -->
+                <div
+                  id="form-success"
+                  class="hidden rounded-2xl bg-primary/10 border border-primary/30 px-6 py-4 text-primary font-semibold text-base"
+                >
+                  Message received. Our engineering team will respond shortly.
+                </div>
+                <div
+                  id="form-error"
+                  class="hidden rounded-2xl bg-secondary/10 border border-secondary/30 px-6 py-4 text-secondary font-semibold text-base"
+                >
+                  <span id="form-error-text"
+                    >Something went wrong. Please try again.</span
+                  >
+                </div>
+
+                <button
+                  type="submit"
+                  id="contact-submit"
+                  class="btn btn-primary w-full py-4 text-lg font-semibold transition-opacity disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  <span id="submit-label">Send Message</span>
+                  <span id="submit-loading" class="hidden">Sending...</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <Faq />
+
+  <!-- Call to Action -->
+  <CallToAction />
+
+  {/* GHL Meeting Modal */}
+  {
+    contactData.contact_info?.items.find((i) => i.type === "calendar") && (
+      <GHLMeeting
+        schedulerUrl={
+          contactData.contact_info.items.find((i) => i.type === "calendar")
+            ?.link
+        }
+      />
+    )
+  }
+</Base>
+
+<script>
+  const form = document.getElementById(
+    "contact-form",
+  ) as HTMLFormElement | null;
+  const submitBtn = document.getElementById(
+    "contact-submit",
+  ) as HTMLButtonElement | null;
+  const submitLabel = document.getElementById("submit-label");
+  const submitLoading = document.getElementById("submit-loading");
+  const successEl = document.getElementById("form-success");
+  const errorEl = document.getElementById("form-error");
+  const errorText = document.getElementById("form-error-text");
+
+  function setLoading(loading: boolean) {
+    if (!submitBtn || !submitLabel || !submitLoading) return;
+    submitBtn.disabled = loading;
+    submitLabel.classList.toggle("hidden", loading);
+    submitLoading.classList.toggle("hidden", !loading);
+  }
+
+  function showSuccess() {
+    successEl?.classList.remove("hidden");
+    errorEl?.classList.add("hidden");
+    form?.reset();
+  }
+
+  function showError(msg?: string) {
+    errorEl?.classList.remove("hidden");
+    successEl?.classList.add("hidden");
+    if (errorText && msg) errorText.textContent = msg;
+  }
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Hide previous status
+    successEl?.classList.add("hidden");
+    errorEl?.classList.add("hidden");
+
+    const formData = new FormData(form);
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          phone: formData.get("phone"),
+          message: formData.get("message"),
+        }),
+      });
+
+      const json = await res.json().catch(() => ({}));
+
+      if (res.ok && json.success) {
+        showSuccess();
+      } else {
+        showError(json.error ?? "Something went wrong. Please try again.");
+      }
+    } catch {
+      showError("Network error — please check your connection and try again.");
+    } finally {
+      setLoading(false);
+    }
+  });
+</script>
