@@ -236,10 +236,24 @@ const { checklist_form_action } = config.params;
                         <div
                           class={`blob-message relative z-${i + 1} ${i === 1 ? "lg:w-10/12" : ""}`}
                         >
-                          <span class="font-semibold text-white">
-                            {stat.value}
-                          </span>{" "}
-                          {stat.label}
+                          <div>
+                            <span
+                              class="font-bold text-primary text-h5 mr-1.5"
+                              data-count-up={stat.value}
+                            >
+                              {stat.value}
+                            </span>{" "}
+                            <span class="font-semibold text-white">
+                              {stat.label}
+                            </span>
+                          </div>
+                          <div class="w-full h-1.5 rounded-full bg-primary/14 overflow-hidden mt-3">
+                            <div
+                              class="h-full rounded-full"
+                              style="width: 0%; background: linear-gradient(90deg, #5d8a77, #4c7889);"
+                              data-meter-width={i === 0 ? "98%" : i === 1 ? "94%" : "100%"}
+                            />
+                          </div>
                         </div>
                       ),
                     )}
@@ -315,13 +329,47 @@ const { checklist_form_action } = config.params;
                 set:html={markdownify(homepageData.growth_process.title)}
               />
             </div>
-            <div class="section-content">
-              <div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 xl:gap-16">
-                {homepageData.growth_process.items.map((item: any) => (
+            <div class="section-content relative">
+              <div class="hidden xl:block absolute top-1/2 left-12 right-12 -translate-y-1/2 -z-10 pointer-events-none">
+                <svg
+                  class="w-full h-12 overflow-visible"
+                  viewBox="0 0 1000 48"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M 40 24 C 240 24, 280 24, 500 24 C 720 24, 760 24, 960 24"
+                    stroke="rgba(93, 138, 119, 0.22)"
+                    stroke-width="3"
+                    stroke-dasharray="8 8"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    id="q-pipeline-line"
+                    d="M 40 24 C 240 24, 280 24, 500 24 C 720 24, 760 24, 960 24"
+                    stroke="url(#q-pipe-grad)"
+                    stroke-width="4"
+                    stroke-linecap="round"
+                    pathLength="100"
+                    stroke-dasharray="100"
+                    stroke-dashoffset="100"
+                  />
+                  <defs>
+                    <linearGradient id="q-pipe-grad" x1="0" y1="0" x2="1000" y2="0" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stop-color="#5d8a77" />
+                      <stop offset="50%" stop-color="#4c7889" />
+                      <stop offset="100%" stop-color="#5d8a77" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-8 xl:gap-16" data-pipeline-grid>
+                {homepageData.growth_process.items.map((item: any, idx: number) => (
                   <ProcessCard
                     logo={item.logo}
                     title={item.title}
                     content={item.content}
+                    stepIndex={idx + 1}
                   />
                 ))}
               </div>
@@ -394,7 +442,7 @@ const { checklist_form_action } = config.params;
               </p>
             </div>
             <div class="section-content">
-              <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" data-module-grid>
                 {[
                   { title: "Months", sub: "Every month, state by state", badge: "12 / 11 stored", bg: "#dce8ef", col: "#4c7889" },
                   { title: "Upload", sub: "Avalara export, purchases, Shopify", badge: "Streamed ZIP", bg: "#daece4", col: "#4f7d6b" },
@@ -404,14 +452,15 @@ const { checklist_form_action } = config.params;
                   { title: "PACT emails", sub: "Carrier manifests to state DORs", badge: "AK due in 4d", bg: "#daece4", col: "#4f7d6b" },
                   { title: "Rates & rules", sub: "Wholesale %, $/mL, retail & MLT", badge: "Effective-dated", bg: "#dce8ef", col: "#4c7889" },
                   { title: "Portals & Audit", sub: "Encrypted logins, TOTP & lineage", badge: "AES-256 Vault", bg: "#f4ead4", col: "#94702d" },
-                ].map((mod) => (
+                ].map((mod, idx) => (
                   <a
                     href="https://maxvapor-tax.vercel.app/"
-                    class="clay-card p-6 rounded-[26px] flex flex-col justify-between gap-5 no-underline"
+                    class="q-module-card clay-card p-6 rounded-[26px] flex flex-col justify-between gap-5 no-underline relative overflow-hidden transition-all duration-300"
+                    data-module-card={idx}
                   >
                     <div class="flex items-center justify-between gap-2">
                       <span
-                        class="size-11 rounded-full grid place-items-center font-bold text-sm"
+                        class="q-mod-avatar size-11 rounded-full grid place-items-center font-bold text-sm transition-transform duration-300"
                         style={`background:${mod.bg}; color:${mod.col};`}
                       >
                         Q
@@ -426,6 +475,12 @@ const { checklist_form_action } = config.params;
                     <div>
                       <h3 class="text-h5-sm font-bold text-dark mb-1">{mod.title}</h3>
                       <p class="text-sm text-text-dark">{mod.sub}</p>
+                    </div>
+                    <div class="w-full h-1 rounded-full bg-primary/10 overflow-hidden mt-1">
+                      <div
+                        class="q-mod-progress h-full rounded-full"
+                        style={`width: 0%; background: ${mod.col};`}
+                      />
                     </div>
                   </a>
                 ))}

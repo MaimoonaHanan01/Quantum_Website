@@ -4,19 +4,32 @@ interface Props {
   logo: string;
   title: string;
   content: string;
+  stepIndex?: number;
 }
-const { logo, title, content } = Astro.props;
+const { logo, title, content, stepIndex = 1 } = Astro.props;
+const stepLabel = `STEP 0${stepIndex}`;
 ---
 
 <div
-  class="p-8 xl:px-10 xl:py-11 clay-card flex flex-col items-center text-center"
+  class="q-process-card p-8 xl:px-10 xl:py-11 clay-card flex flex-col items-center text-center relative overflow-hidden transition-all duration-300"
+  data-process-card={stepIndex}
 >
-  <div class="size-14 rounded-2xl bg-white/80 grid place-items-center mb-6 shadow-sm">
+  <span class="px-3.5 py-1 rounded-full text-xs font-bold tracking-wider uppercase mb-4 bg-primary/12 text-primary border border-primary/25">
+    {stepLabel}
+  </span>
+  <div class="q-process-icon size-15 rounded-2xl bg-white/85 grid place-items-center mb-6 shadow-sm border border-white transition-transform duration-300">
     <ImageMod src={logo} alt={`${title} icon`} class="size-7" />
   </div>
   <h3 class="text-h5-sm font-bold font-secondary text-dark">{title}</h3>
   <div class="w-px h-8 my-4 bg-primary/35"></div>
-  <p class="text-text">
+  <p class="text-text mb-6">
     {content}
   </p>
+  <div class="w-full h-1.5 rounded-full bg-primary/12 overflow-hidden mt-auto">
+    <div
+      class="q-process-bar h-full rounded-full"
+      style="width: 0%; background: linear-gradient(90deg, #5d8a77, #4c7889);"
+      data-process-bar
+    ></div>
+  </div>
 </div>

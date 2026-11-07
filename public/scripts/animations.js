@@ -157,33 +157,276 @@ import { sporeCanvas } from "./particleCanvas.js";
     });
   }
 
-  // 4. Distinct Section-by-Section SaaS Scroll Animations
-  function sectionCascades() {
-    // A. Section Introductions (badge + subtitle fade-up)
-    const intros = document.querySelectorAll(".section-intro");
-    intros.forEach((intro) => {
-      const children = intro.querySelectorAll("div:first-child, .subtitle");
-      if (!children.length) return;
+  // 4. Signature Animation #1: Sticky Stacking Deck (5 Filing Pillars)
+  function stickyStackingDeck() {
+    const stackCards = document.querySelectorAll(".q-stack-card");
+    if (!stackCards.length) return;
+
+    const mm = gsap.matchMedia();
+    mm.add("(min-width: 1024px)", () => {
+      stackCards.forEach((card, i) => {
+        const nextCard = stackCards[i + 1];
+        if (nextCard) {
+          const targetScale = 1 - (stackCards.length - 1 - i) * 0.022;
+          gsap.to(card, {
+            scale: targetScale,
+            y: -8,
+            force3D: true,
+            ease: "none",
+            scrollTrigger: {
+              trigger: nextCard,
+              start: "top 80%",
+              end: "top 25%",
+              scrub: 0.4,
+            },
+          });
+        }
+      });
+    });
+
+    stackCards.forEach((card) => {
+      const strokeNum = card.querySelector(".t-stroke");
+      if (strokeNum) {
+        gsap.fromTo(
+          strokeNum,
+          { y: 16, force3D: true },
+          {
+            y: -16,
+            force3D: true,
+            ease: "none",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 95%",
+              end: "bottom 15%",
+              scrub: 0.4,
+            },
+          },
+        );
+      }
+    });
+  }
+
+  // 5. Signature Animation #2: Animated SVG Pipeline Flow (3-Step Monthly Close)
+  function pipelineFlowAnimation() {
+    const grid = document.querySelector("[data-pipeline-grid]");
+    if (!grid) return;
+
+    const line = document.getElementById("q-pipeline-line");
+    const cards = grid.querySelectorAll("[data-process-card]");
+
+    if (line) {
       gsap.fromTo(
-        children,
-        { y: 18, opacity: 0, force3D: true },
+        line,
+        { strokeDashoffset: 100 },
         {
-          y: 0,
-          opacity: 1,
-          force3D: true,
-          duration: 0.5,
-          stagger: 0.08,
-          ease: "power2.out",
+          strokeDashoffset: 0,
+          duration: 1.5,
+          ease: "power2.inOut",
           scrollTrigger: {
-            trigger: intro,
-            start: "top 88%",
+            trigger: grid,
+            start: "top 80%",
             once: true,
           },
         },
       );
+    }
+
+    cards.forEach((card, i) => {
+      const bar = card.querySelector("[data-process-bar]");
+      ScrollTrigger.create({
+        trigger: grid,
+        start: "top 80%",
+        once: true,
+        onEnter: () => {
+          setTimeout(() => {
+            card.classList.add("q-process-active");
+            if (bar) {
+              gsap.to(bar, {
+                width: "100%",
+                duration: 0.75,
+                ease: "power2.out",
+              });
+            }
+          }, i * 380);
+        },
+      });
+    });
+  }
+
+  // 6. Signature Animation #3: Live Number Counters & Meter Bars
+  function liveCountersAndMeters() {
+    const counters = document.querySelectorAll("[data-count-up]");
+    counters.forEach((el) => {
+      const raw = (el.getAttribute("data-count-up") || "").trim();
+      const match = raw.match(/^([^0-9]*)([0-9]+(?:\.[0-9]+)?)([^0-9]*)$/);
+      if (!match) return;
+
+      const prefix = match[1];
+      const numStr = match[2];
+      const suffix = match[3];
+      const targetVal = parseFloat(numStr);
+      const decimals = numStr.includes(".") ? numStr.split(".")[1].length : 0;
+
+      const state = { val: 0 };
+      gsap.to(state, {
+        val: targetVal,
+        duration: 1.35,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 90%",
+          once: true,
+        },
+        onUpdate: () => {
+          el.textContent = `${prefix}${state.val.toFixed(decimals)}${suffix}`;
+        },
+      });
     });
 
-    // B. Core Engine Pill Rows: Staggered pop-in + opposing scroll scrub
+    const meters = document.querySelectorAll("[data-meter-width]");
+    meters.forEach((bar) => {
+      const targetWidth = bar.getAttribute("data-meter-width") || "95%";
+      gsap.to(bar, {
+        width: targetWidth,
+        duration: 1.15,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: bar,
+          start: "top 92%",
+          once: true,
+        },
+      });
+    });
+  }
+
+  // 7. Signature Animation #4: Auto-Cycling Module Spotlight (8 Workspace Modules)
+  function moduleSpotlightCycle() {
+    const grid = document.querySelector("[data-module-grid]");
+    if (!grid) return;
+
+    const cards = Array.from(grid.querySelectorAll("[data-module-card]"));
+    if (!cards.length) return;
+
+    let currentIdx = 0;
+    let timer = null;
+    let isHovered = false;
+
+    const activateCard = (idx) => {
+      cards.forEach((c, i) => {
+        const bar = c.querySelector(".q-mod-progress");
+        if (i === idx) {
+          c.classList.add("q-module-active");
+          if (bar) {
+            gsap.killTweensOf(bar);
+            gsap.fromTo(
+              bar,
+              { width: "0%" },
+              { width: "100%", duration: isHovered ? 0.35 : 2.1, ease: "linear" },
+            );
+          }
+        } else {
+          c.classList.remove("q-module-active");
+          if (bar) {
+            gsap.killTweensOf(bar);
+            gsap.set(bar, { width: "0%" });
+          }
+        }
+      });
+    };
+
+    const startCycle = () => {
+      if (timer) clearInterval(timer);
+      activateCard(currentIdx);
+      timer = setInterval(() => {
+        if (isHovered) return;
+        currentIdx = (currentIdx + 1) % cards.length;
+        activateCard(currentIdx);
+      }, 2200);
+    };
+
+    cards.forEach((card, i) => {
+      card.addEventListener("mouseenter", () => {
+        isHovered = true;
+        currentIdx = i;
+        activateCard(i);
+      });
+      card.addEventListener("mouseleave", () => {
+        isHovered = false;
+      });
+    });
+
+    ScrollTrigger.create({
+      trigger: grid,
+      start: "top 88%",
+      once: true,
+      onEnter: startCycle,
+    });
+  }
+
+  // 8. Signature Animation #5: Live Comparison Sweep (Quantum vs. Legacy)
+  function comparisonSweepAnimation() {
+    const rows = document.querySelectorAll(".q-comparison-row");
+    rows.forEach((row, i) => {
+      const sweep = row.querySelector("[data-comp-sweep]");
+      const tags = row.querySelectorAll(".q-comp-tag");
+
+      gsap.fromTo(
+        row,
+        { y: 20, opacity: 0, force3D: true },
+        {
+          y: 0,
+          opacity: 1,
+          force3D: true,
+          duration: 0.45,
+          delay: i * 0.05,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: row,
+            start: "top 90%",
+            once: true,
+          },
+        },
+      );
+
+      if (sweep) {
+        gsap.to(sweep, {
+          width: "100%",
+          duration: 0.9,
+          delay: 0.1 + i * 0.06,
+          ease: "power2.inOut",
+          scrollTrigger: {
+            trigger: row,
+            start: "top 88%",
+            once: true,
+          },
+        });
+      }
+
+      if (tags.length) {
+        gsap.fromTo(
+          tags,
+          { scale: 0.88, opacity: 0, force3D: true },
+          {
+            scale: 1,
+            opacity: 1,
+            force3D: true,
+            duration: 0.35,
+            stagger: 0.05,
+            delay: 0.12 + i * 0.04,
+            ease: "back.out(1.4)",
+            scrollTrigger: {
+              trigger: row,
+              start: "top 88%",
+              once: true,
+            },
+          },
+        );
+      }
+    });
+  }
+
+  // 9. General Section Cascades & Testimonial Quote Reveal
+  function sectionCascades() {
     const pillGroups = document.querySelectorAll(".feature-items-group");
     pillGroups.forEach((group, idx) => {
       const pills = group.children;
@@ -226,7 +469,6 @@ import { sporeCanvas } from "./particleCanvas.js";
       );
     });
 
-    // C. 9-Cell Feature Matrix: Wave Cascade Reveal
     const featureCells = document.querySelectorAll(".q-feature-cell");
     if (featureCells.length) {
       gsap.fromTo(
@@ -249,71 +491,6 @@ import { sporeCanvas } from "./particleCanvas.js";
       );
     }
 
-    // D. 5 Filing Pillars: Diagonal Staircase Reveal + Number Parallax
-    const pillarCards = document.querySelectorAll("[data-bn-card]");
-    pillarCards.forEach((card, i) => {
-      const fromX = i % 2 === 0 ? -24 : 24;
-      gsap.fromTo(
-        card,
-        { x: fromX, y: 32, opacity: 0, force3D: true },
-        {
-          x: 0,
-          y: 0,
-          opacity: 1,
-          force3D: true,
-          duration: 0.6,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 88%",
-            once: true,
-          },
-        },
-      );
-
-      const strokeNum = card.querySelector(".t-stroke");
-      if (strokeNum) {
-        gsap.fromTo(
-          strokeNum,
-          { y: 18, force3D: true },
-          {
-            y: -18,
-            force3D: true,
-            ease: "none",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 95%",
-              end: "bottom 15%",
-              scrub: 0.4,
-            },
-          },
-        );
-      }
-    });
-
-    // E. Comparison Rows: Split Left/Center/Right Convergence
-    const comparisonRows = document.querySelectorAll(".q-comparison-row");
-    if (comparisonRows.length) {
-      gsap.fromTo(
-        comparisonRows,
-        { y: 22, opacity: 0, force3D: true },
-        {
-          y: 0,
-          opacity: 1,
-          force3D: true,
-          duration: 0.48,
-          stagger: 0.06,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: comparisonRows[0],
-            start: "top 88%",
-            once: true,
-          },
-        },
-      );
-    }
-
-    // F. General Section Clay Cards, Accordions, and Lists
     const sections = document.querySelectorAll(".section, .section-box");
     sections.forEach((sec) => {
       const cards = sec.querySelectorAll(
@@ -322,17 +499,17 @@ import { sporeCanvas } from "./particleCanvas.js";
       if (cards.length) {
         gsap.fromTo(
           cards,
-          { y: 30, opacity: 0, force3D: true },
+          { y: 28, opacity: 0, force3D: true },
           {
             y: 0,
             opacity: 1,
             force3D: true,
-            duration: 0.55,
-            stagger: 0.06,
+            duration: 0.5,
+            stagger: 0.05,
             ease: "power3.out",
             scrollTrigger: {
               trigger: sec,
-              start: "top 84%",
+              start: "top 85%",
               once: true,
             },
           },
@@ -363,7 +540,6 @@ import { sporeCanvas } from "./particleCanvas.js";
       }
     });
 
-    // G. Testimonial Quote Word-by-Word Scroll Illumination
     const quotes = document.querySelectorAll("blockquote");
     quotes.forEach((quote) => {
       if (quote.dataset.qQuoteSplit === "true") return;
@@ -402,7 +578,7 @@ import { sporeCanvas } from "./particleCanvas.js";
     });
   }
 
-  // 5. Lightweight QuickTo Interactive 3D Tilt on Clay Cards & Magnetic Buttons
+  // 10. Lightweight QuickTo Interactive 3D Tilt on Clay Cards & Magnetic Buttons
   function interactiveClayEffects() {
     if (window.innerWidth < 1024) return;
 
@@ -453,7 +629,6 @@ import { sporeCanvas } from "./particleCanvas.js";
       );
     });
 
-    // Subtle magnetic pull on CTA buttons
     const buttons = document.querySelectorAll(".btn");
     buttons.forEach((btn) => {
       const xTo = gsap.quickTo(btn, "x", { duration: 0.22, ease: "power2.out" });
@@ -482,12 +657,12 @@ import { sporeCanvas } from "./particleCanvas.js";
     });
   }
 
-  // 6. Particle spore canvas effect (disabled for clean background)
+  // 11. Particle spore canvas effect (disabled for clean background)
   function sporesEffect() {
     sporeCanvas(".heroSporeCanvas", 42, 0.8, 2.0, 0.08, 0.28);
   }
 
-  // 7. Pricing toggle: Monthly <-> Yearly
+  // 12. Pricing toggle: Monthly <-> Yearly
   function pricingToggle() {
     const toggle = document.querySelector("[data-pricing-toggle]");
     const labels = document.querySelectorAll(".price-toggler-btn");
@@ -537,6 +712,11 @@ import { sporeCanvas } from "./particleCanvas.js";
     navTabHoverIndicator();
     heroVideo();
     kineticTypography();
+    stickyStackingDeck();
+    pipelineFlowAnimation();
+    liveCountersAndMeters();
+    moduleSpotlightCycle();
+    comparisonSweepAnimation();
     sectionCascades();
     interactiveClayEffects();
     sporesEffect();

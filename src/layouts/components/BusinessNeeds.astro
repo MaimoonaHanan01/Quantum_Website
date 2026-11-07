@@ -17,13 +17,14 @@ if (!bnData.enable) return;
             <h2 class="title hasHighlight  " set:html={bnData.title} />
           </div>
           <div class="section-content">
-            <div class="flex flex-col gap-y-2 px-4">
-              {bnData.items.map((item) => (
+            <div class="q-stack-deck flex flex-col gap-y-6 px-4 relative">
+              {bnData.items.map((item, idx) => (
                 <StepCard
                   image={item.image}
                   number={item.number}
                   title={item.title}
                   content={item.content}
+                  stackIndex={idx}
                 />
               ))}
             </div>

@@ -481,3 +481,26 @@ ul.green-tick-list li:hover {
   transform: translateX(5px);
   color: var(--ink);
 }
+
+/* Signature SaaS Section Active States */
+.q-module-card.q-module-active {
+  transform: translateY(-7px) scale(1.02);
+  border-color: rgba(93, 138, 119, 0.55) !important;
+  box-shadow: 0 20px 36px -10px rgba(93, 138, 119, 0.28),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.96);
+}
+
+.q-module-card.q-module-active .q-mod-avatar {
+  transform: scale(1.1) rotate(-4deg);
+}
+
+.q-process-card.q-process-active {
+  border-color: rgba(93, 138, 119, 0.52) !important;
+  box-shadow: 0 22px 38px -12px rgba(93, 138, 119, 0.26),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.96);
+}
+
+.q-process-card.q-process-active .q-process-icon {
+  transform: translateY(-4px) scale(1.08);
+}
+
