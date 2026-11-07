@@ -19,8 +19,8 @@ const info = pillarBadges[number] ?? { tag: "Quantum Engine", metric: "Verified"
 ---
 
 <div
-  class="q-stack-card p-8 xl:px-20 xl:py-8 relative lg:sticky transition-shadow duration-300"
-  style={`--stack-idx: ${stackIndex}; top: calc(96px + ${stackIndex * 22}px); z-index: ${10 + stackIndex};`}
+  class="q-stack-card clay-card rounded-3xl p-8 xl:px-16 xl:py-9 relative lg:sticky mb-6"
+  style={`--stack-idx: ${stackIndex}; top: calc(104px + ${stackIndex * 20}px); z-index: ${10 + stackIndex}; background: linear-gradient(145deg, #faf6f1, #f1e8dc); box-shadow: 0 -10px 28px rgba(90, 74, 60, 0.12), var(--clay-hi);`}
   data-bn-card={number}
   data-stack-index={stackIndex}
 >
@@ -42,12 +42,5 @@ const info = pillarBadges[number] ?? { tag: "Quantum Engine", metric: "Verified"
       <h3 class="text-h5-sm font-bold absolute text-dark">{title}</h3>
     </div>
     <p class="lg:col-4 text-sm max-lg:my-4 max-lg:order-3 text-text">{content}</p>
-  </div>
-  <div class="absolute inset-0 size-full -z-10">
-    <div
-      class="clay-card size-full rounded-3xl"
-      style="transform: perspective(100px) rotateX(-1deg);"
-    >
-    </div>
   </div>
 </div>

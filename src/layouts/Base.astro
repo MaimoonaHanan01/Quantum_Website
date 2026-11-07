@@ -136,10 +136,10 @@ const { title, meta_title, description, image, noindex, canonical } =
     ></script>
 
     <!-- Main UI interactions -->
-    <script is:inline defer src="/scripts/main.js"></script>
+    <script is:inline defer src="/scripts/main.js?v=5"></script>
 
     <!-- Animations (Modules are deferred automatically by browsers) -->
-    <script is:inline type="module" src="/scripts/animations.js"></script>
+    <script is:inline type="module" src="/scripts/animations.js?v=5"></script>
   </head>
   <body>
     {/* google tag manager noscript */}
@@ -151,7 +151,7 @@ const { title, meta_title, description, image, noindex, canonical } =
 
     {/* <TwSizeIndicator /> */}
     <Header />
-    <main id="main-content" class="overflow-x-hidden md:overflow-x-auto">
+    <main id="main-content" class="overflow-x-clip">
       <slot />
     </main>
     <Footer />

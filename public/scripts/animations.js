@@ -4,6 +4,8 @@ import { sporeCanvas } from "./particleCanvas.js";
 (function () {
   "use strict";
 
+  let retries = 0;
+
   // 1. Sliding SaaS Navbar Tab Hover Pill
   function navTabHoverIndicator() {
     const navList = document.querySelector(".navbar-nav");
@@ -20,7 +22,10 @@ import { sporeCanvas } from "./particleCanvas.js";
     navList.prepend(pill);
 
     const xTo = gsap.quickTo(pill, "x", { duration: 0.28, ease: "power3.out" });
-    const wTo = gsap.quickTo(pill, "width", { duration: 0.28, ease: "power3.out" });
+    const wTo = gsap.quickTo(pill, "width", {
+      duration: 0.28,
+      ease: "power3.out",
+    });
 
     links.forEach((link) => {
       link.style.position = "relative";
@@ -43,24 +48,6 @@ import { sporeCanvas } from "./particleCanvas.js";
 
   // 2. Hero Entrance & 3D Video Showcase Scroll Tilt
   function heroVideo() {
-    const heroIntro = document.querySelectorAll(
-      ".hero-title, .hero-subtitle, .hero-cta-group",
-    );
-    if (heroIntro.length) {
-      gsap.fromTo(
-        heroIntro,
-        { y: 24, opacity: 0, force3D: true },
-        {
-          y: 0,
-          opacity: 1,
-          force3D: true,
-          duration: 0.65,
-          stagger: 0.08,
-          ease: "power3.out",
-        },
-      );
-    }
-
     const gsapVideoShowcase = document.querySelectorAll(
       "[data-gsap-video-showcase]",
     );
@@ -69,7 +56,7 @@ import { sporeCanvas } from "./particleCanvas.js";
     const mm = gsap.matchMedia();
     gsapVideoShowcase.forEach((el) => {
       mm.add("(min-width: 1024px)", () => {
-        gsap.set(el, { scale: 0.9, rotationX: 9, y: -36, force3D: true });
+        gsap.set(el, { scale: 0.92, rotationX: 8, y: -32, force3D: true });
         gsap.to(el, {
           scrollTrigger: {
             trigger: el,
@@ -139,17 +126,18 @@ import { sporeCanvas } from "./particleCanvas.js";
 
       gsap.fromTo(
         words,
-        { y: 22, opacity: 0, force3D: true },
+        { y: 20, opacity: 0, force3D: true },
         {
           y: 0,
           opacity: 1,
           force3D: true,
-          duration: 0.52,
-          stagger: 0.028,
+          duration: 0.5,
+          stagger: 0.025,
           ease: "power2.out",
+          clearProps: "transform",
           scrollTrigger: {
             trigger: heading,
-            start: "top 90%",
+            start: "top 92%",
             once: true,
           },
         },
@@ -167,17 +155,17 @@ import { sporeCanvas } from "./particleCanvas.js";
       stackCards.forEach((card, i) => {
         const nextCard = stackCards[i + 1];
         if (nextCard) {
-          const targetScale = 1 - (stackCards.length - 1 - i) * 0.022;
+          const targetScale = 1 - (stackCards.length - 1 - i) * 0.024;
           gsap.to(card, {
             scale: targetScale,
-            y: -8,
+            y: -10,
             force3D: true,
             ease: "none",
             scrollTrigger: {
               trigger: nextCard,
-              start: "top 80%",
-              end: "top 25%",
-              scrub: 0.4,
+              start: "top 82%",
+              end: "top 24%",
+              scrub: 0.35,
             },
           });
         }
@@ -220,11 +208,11 @@ import { sporeCanvas } from "./particleCanvas.js";
         { strokeDashoffset: 100 },
         {
           strokeDashoffset: 0,
-          duration: 1.5,
+          duration: 1.4,
           ease: "power2.inOut",
           scrollTrigger: {
             trigger: grid,
-            start: "top 80%",
+            start: "top 82%",
             once: true,
           },
         },
@@ -235,7 +223,7 @@ import { sporeCanvas } from "./particleCanvas.js";
       const bar = card.querySelector("[data-process-bar]");
       ScrollTrigger.create({
         trigger: grid,
-        start: "top 80%",
+        start: "top 82%",
         once: true,
         onEnter: () => {
           setTimeout(() => {
@@ -243,11 +231,11 @@ import { sporeCanvas } from "./particleCanvas.js";
             if (bar) {
               gsap.to(bar, {
                 width: "100%",
-                duration: 0.75,
+                duration: 0.7,
                 ease: "power2.out",
               });
             }
-          }, i * 380);
+          }, i * 340);
         },
       });
     });
@@ -258,14 +246,28 @@ import { sporeCanvas } from "./particleCanvas.js";
     const counters = document.querySelectorAll("[data-count-up]");
     counters.forEach((el) => {
       const raw = (el.getAttribute("data-count-up") || "").trim();
-      const match = raw.match(/^([^0-9]*)([0-9]+(?:\.[0-9]+)?)([^0-9]*)$/);
+      const match = raw.match(/^([^0-9]*)([0-9][0-9,]*(?:\.[0-9]+)?)(.*)$/);
       if (!match) return;
 
       const prefix = match[1];
-      const numStr = match[2];
+      const numRaw = match[2];
       const suffix = match[3];
-      const targetVal = parseFloat(numStr);
-      const decimals = numStr.includes(".") ? numStr.split(".")[1].length : 0;
+      const hasComma = numRaw.includes(",");
+      const cleanNum = numRaw.replace(/,/g, "");
+      const targetVal = parseFloat(cleanNum);
+      if (isNaN(targetVal) || targetVal === 0) return;
+
+      const decimals = cleanNum.includes(".")
+        ? cleanNum.split(".")[1].length
+        : 0;
+
+      const formatVal = (v) => {
+        const fixed = v.toFixed(decimals);
+        if (!hasComma) return fixed;
+        const parts = fixed.split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return parts.join(".");
+      };
 
       const state = { val: 0 };
       gsap.to(state, {
@@ -274,11 +276,11 @@ import { sporeCanvas } from "./particleCanvas.js";
         ease: "power2.out",
         scrollTrigger: {
           trigger: el,
-          start: "top 90%",
+          start: "top 92%",
           once: true,
         },
         onUpdate: () => {
-          el.textContent = `${prefix}${state.val.toFixed(decimals)}${suffix}`;
+          el.textContent = `${prefix}${formatVal(state.val)}${suffix}`;
         },
       });
     });
@@ -292,7 +294,7 @@ import { sporeCanvas } from "./particleCanvas.js";
         ease: "power3.out",
         scrollTrigger: {
           trigger: bar,
-          start: "top 92%",
+          start: "top 94%",
           once: true,
         },
       });
@@ -321,7 +323,11 @@ import { sporeCanvas } from "./particleCanvas.js";
             gsap.fromTo(
               bar,
               { width: "0%" },
-              { width: "100%", duration: isHovered ? 0.35 : 2.1, ease: "linear" },
+              {
+                width: "100%",
+                duration: isHovered ? 0.3 : 2.1,
+                ease: "linear",
+              },
             );
           }
         } else {
@@ -357,7 +363,7 @@ import { sporeCanvas } from "./particleCanvas.js";
 
     ScrollTrigger.create({
       trigger: grid,
-      start: "top 88%",
+      start: "top 90%",
       once: true,
       onEnter: startCycle,
     });
@@ -378,11 +384,12 @@ import { sporeCanvas } from "./particleCanvas.js";
           opacity: 1,
           force3D: true,
           duration: 0.45,
-          delay: i * 0.05,
+          delay: i * 0.04,
           ease: "power2.out",
+          clearProps: "transform",
           scrollTrigger: {
             trigger: row,
-            start: "top 90%",
+            start: "top 92%",
             once: true,
           },
         },
@@ -392,11 +399,11 @@ import { sporeCanvas } from "./particleCanvas.js";
         gsap.to(sweep, {
           width: "100%",
           duration: 0.9,
-          delay: 0.1 + i * 0.06,
+          delay: 0.08 + i * 0.05,
           ease: "power2.inOut",
           scrollTrigger: {
             trigger: row,
-            start: "top 88%",
+            start: "top 90%",
             once: true,
           },
         });
@@ -411,12 +418,13 @@ import { sporeCanvas } from "./particleCanvas.js";
             opacity: 1,
             force3D: true,
             duration: 0.35,
-            stagger: 0.05,
-            delay: 0.12 + i * 0.04,
+            stagger: 0.04,
+            delay: 0.1 + i * 0.04,
             ease: "back.out(1.4)",
+            clearProps: "transform",
             scrollTrigger: {
               trigger: row,
-              start: "top 88%",
+              start: "top 90%",
               once: true,
             },
           },
@@ -433,18 +441,19 @@ import { sporeCanvas } from "./particleCanvas.js";
       if (pills.length) {
         gsap.fromTo(
           pills,
-          { scale: 0.9, y: 20, opacity: 0, force3D: true },
+          { scale: 0.92, y: 18, opacity: 0, force3D: true },
           {
             scale: 1,
             y: 0,
             opacity: 1,
             force3D: true,
-            duration: 0.45,
-            stagger: 0.05,
+            duration: 0.42,
+            stagger: 0.04,
             ease: "back.out(1.4)",
+            clearProps: "transform",
             scrollTrigger: {
               trigger: group,
-              start: "top 90%",
+              start: "top 92%",
               once: true,
             },
           },
@@ -454,9 +463,9 @@ import { sporeCanvas } from "./particleCanvas.js";
       const dir = idx % 2 === 0 ? 1 : -1;
       gsap.fromTo(
         group,
-        { x: -22 * dir, force3D: true },
+        { x: -20 * dir, force3D: true },
         {
-          x: 22 * dir,
+          x: 20 * dir,
           force3D: true,
           ease: "none",
           scrollTrigger: {
@@ -473,18 +482,19 @@ import { sporeCanvas } from "./particleCanvas.js";
     if (featureCells.length) {
       gsap.fromTo(
         featureCells,
-        { y: 30, scale: 0.95, opacity: 0, force3D: true },
+        { y: 24, scale: 0.95, opacity: 0, force3D: true },
         {
           y: 0,
           scale: 1,
           opacity: 1,
           force3D: true,
-          duration: 0.5,
-          stagger: 0.055,
+          duration: 0.45,
+          stagger: 0.05,
           ease: "power3.out",
+          clearProps: "transform",
           scrollTrigger: {
             trigger: featureCells[0].closest(".clay-card") || featureCells[0],
-            start: "top 85%",
+            start: "top 88%",
             once: true,
           },
         },
@@ -494,22 +504,23 @@ import { sporeCanvas } from "./particleCanvas.js";
     const sections = document.querySelectorAll(".section, .section-box");
     sections.forEach((sec) => {
       const cards = sec.querySelectorAll(
-        ".clay-card:not([data-gsap-video-showcase]):not([data-bn-card]), .accordion, .blob-message",
+        ".clay-card:not([data-gsap-video-showcase]):not([data-bn-card]):not(.q-module-card):not(.q-process-card):not(.q-comp-left):not(.q-comp-right), .accordion, .blob-message",
       );
       if (cards.length) {
         gsap.fromTo(
           cards,
-          { y: 28, opacity: 0, force3D: true },
+          { y: 24, opacity: 0, force3D: true },
           {
             y: 0,
             opacity: 1,
             force3D: true,
-            duration: 0.5,
+            duration: 0.48,
             stagger: 0.05,
             ease: "power3.out",
+            clearProps: "transform",
             scrollTrigger: {
               trigger: sec,
-              start: "top 85%",
+              start: "top 86%",
               once: true,
             },
           },
@@ -522,17 +533,18 @@ import { sporeCanvas } from "./particleCanvas.js";
       if (listItems.length) {
         gsap.fromTo(
           listItems,
-          { x: -16, opacity: 0, force3D: true },
+          { x: -14, opacity: 0, force3D: true },
           {
             x: 0,
             opacity: 1,
             force3D: true,
-            duration: 0.4,
+            duration: 0.38,
             stagger: 0.04,
             ease: "power2.out",
+            clearProps: "transform",
             scrollTrigger: {
               trigger: listItems[0],
-              start: "top 90%",
+              start: "top 92%",
               once: true,
             },
           },
@@ -578,61 +590,20 @@ import { sporeCanvas } from "./particleCanvas.js";
     });
   }
 
-  // 10. Lightweight QuickTo Interactive 3D Tilt on Clay Cards & Magnetic Buttons
+  // 10. Magnetic Buttons
   function interactiveClayEffects() {
     if (window.innerWidth < 1024) return;
 
-    const cards = document.querySelectorAll(
-      ".clay-card:not([data-gsap-video-showcase])",
-    );
-    cards.forEach((card) => {
-      const rotX = gsap.quickTo(card, "rotationX", {
-        duration: 0.25,
-        ease: "power2.out",
-      });
-      const rotY = gsap.quickTo(card, "rotationY", {
-        duration: 0.25,
-        ease: "power2.out",
-      });
-      const liftY = gsap.quickTo(card, "y", {
-        duration: 0.25,
-        ease: "power2.out",
-      });
-      gsap.set(card, { transformPerspective: 900, force3D: true });
-
-      card.addEventListener(
-        "mousemove",
-        (e) => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          card.style.setProperty("--mx", `${x}px`);
-          card.style.setProperty("--my", `${y}px`);
-          card.style.setProperty("--glare-opacity", "1");
-
-          rotY((x / rect.width - 0.5) * 4.5);
-          rotX(-(y / rect.height - 0.5) * 4.5);
-          liftY(-5);
-        },
-        { passive: true },
-      );
-
-      card.addEventListener(
-        "mouseleave",
-        () => {
-          card.style.setProperty("--glare-opacity", "0");
-          rotX(0);
-          rotY(0);
-          liftY(0);
-        },
-        { passive: true },
-      );
-    });
-
     const buttons = document.querySelectorAll(".btn");
     buttons.forEach((btn) => {
-      const xTo = gsap.quickTo(btn, "x", { duration: 0.22, ease: "power2.out" });
-      const yTo = gsap.quickTo(btn, "y", { duration: 0.22, ease: "power2.out" });
+      const xTo = gsap.quickTo(btn, "x", {
+        duration: 0.22,
+        ease: "power2.out",
+      });
+      const yTo = gsap.quickTo(btn, "y", {
+        duration: 0.22,
+        ease: "power2.out",
+      });
 
       btn.addEventListener(
         "mousemove",
@@ -705,8 +676,13 @@ import { sporeCanvas } from "./particleCanvas.js";
   }
 
   function init() {
-    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined")
+    if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") {
+      if (retries < 50) {
+        retries += 1;
+        setTimeout(init, 40);
+      }
       return;
+    }
     gsap.registerPlugin(ScrollTrigger);
 
     navTabHoverIndicator();
@@ -721,6 +697,11 @@ import { sporeCanvas } from "./particleCanvas.js";
     interactiveClayEffects();
     sporesEffect();
     pricingToggle();
+
+    ScrollTrigger.refresh();
+    window.addEventListener("load", () => ScrollTrigger.refresh(), {
+      once: true,
+    });
   }
 
   if (document.readyState === "loading") {

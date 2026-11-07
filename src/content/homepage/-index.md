@@ -96,10 +96,10 @@ single_testimonial:
   stats:
     - value: "42+"
       label: "Jurisdictions Reconciled"
-    - value: "$0.00"
-      label: "Gross-to-Taxable Drift"
-    - value: "5 Tabs"
-      label: "Per State Workbook"
+    - value: "2,440"
+      label: "Active SKUs Validated"
+    - value: "100%"
+      label: "Gross-to-Taxable Accuracy"
   testimonial:
     quote: "Quantum caught 445 SKUs missing wholesale cost before we filed Washington and Illinois, saving us from understating excise and facing audit penalties."
     avatar: "/images/avatar.png"

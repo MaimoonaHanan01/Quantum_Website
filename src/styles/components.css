@@ -483,24 +483,30 @@ ul.green-tick-list li:hover {
 }
 
 /* Signature SaaS Section Active States */
+.q-word {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
 .q-module-card.q-module-active {
-  transform: translateY(-7px) scale(1.02);
-  border-color: rgba(93, 138, 119, 0.55) !important;
-  box-shadow: 0 20px 36px -10px rgba(93, 138, 119, 0.28),
-    inset 2px 2px 5px rgba(255, 255, 255, 0.96);
+  transform: translateY(-8px) scale(1.025) !important;
+  border-color: rgba(93, 138, 119, 0.65) !important;
+  box-shadow: 0 22px 40px -10px rgba(93, 138, 119, 0.32),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.98) !important;
 }
 
 .q-module-card.q-module-active .q-mod-avatar {
-  transform: scale(1.1) rotate(-4deg);
+  transform: scale(1.12) rotate(-5deg) !important;
 }
 
 .q-process-card.q-process-active {
-  border-color: rgba(93, 138, 119, 0.52) !important;
-  box-shadow: 0 22px 38px -12px rgba(93, 138, 119, 0.26),
-    inset 2px 2px 5px rgba(255, 255, 255, 0.96);
+  transform: translateY(-6px) !important;
+  border-color: rgba(93, 138, 119, 0.6) !important;
+  box-shadow: 0 22px 38px -12px rgba(93, 138, 119, 0.3),
+    inset 2px 2px 5px rgba(255, 255, 255, 0.98) !important;
 }
 
 .q-process-card.q-process-active .q-process-icon {
-  transform: translateY(-4px) scale(1.08);
+  transform: translateY(-4px) scale(1.1) !important;
 }
 
