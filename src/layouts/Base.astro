@@ -136,12 +136,36 @@ const { title, meta_title, description, image, noindex, canonical } =
     ></script>
 
     <!-- Main UI interactions -->
-    <script is:inline defer src="/scripts/main.js?v=6"></script>
+    <script is:inline defer src="/scripts/main.js?v=7"></script>
 
     <!-- Animations (Modules are deferred automatically by browsers) -->
-    <script is:inline type="module" src="/scripts/animations.js?v=6"></script>
+    <script is:inline type="module" src="/scripts/animations.js?v=7"></script>
   </head>
   <body>
+    <!-- Top Scroll Progress Ribbon -->
+    <div
+      id="q-scroll-ribbon"
+      class="fixed top-0 left-0 h-1 w-full z-100 pointer-events-none origin-left"
+      style="transform: scaleX(0); background: linear-gradient(90deg, #5d8a77 0%, #4c7889 55%, #6c9886 100%);"
+    ></div>
+
+    <!-- Floating Section Indicator Pill -->
+    <button
+      type="button"
+      id="q-section-pill"
+      class="fixed bottom-6 right-6 z-50 hidden lg:flex items-center gap-2.5 px-4 py-2.5 rounded-full clay-card cursor-pointer transition-all duration-300 opacity-0 translate-y-4"
+      aria-label="Scroll to top"
+    >
+      <span
+        id="q-section-num"
+        class="size-6 rounded-full clay-feature-wave grid place-items-center text-[11px] font-extrabold text-primary"
+      >
+        01
+      </span>
+      <span id="q-section-label" class="text-xs font-bold text-dark">
+        Overview
+      </span>
+    </button>
     {/* google tag manager noscript */}
     {
       config.google_tag_manager.enable && (

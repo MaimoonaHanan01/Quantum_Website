@@ -588,3 +588,91 @@ ul.green-tick-list li:hover {
     inset 2px 2px 5px rgba(255, 255, 255, 0.98) !important;
 }
 
+/* Hero 3D Floating Telemetry Cards */
+@keyframes qFloat3D {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -9px, 0);
+  }
+}
+
+.q-float-1 {
+  animation: qFloat3D 4.6s ease-in-out infinite;
+}
+
+.q-float-2 {
+  animation: qFloat3D 5.2s ease-in-out 0.8s infinite;
+}
+
+.q-float-3 {
+  animation: qFloat3D 4.9s ease-in-out 1.5s infinite;
+}
+
+/* Before -> After Bottleneck Morph State */
+.q-bottleneck-pill {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.q-bottleneck-pill.q-bn-resolved {
+  background: linear-gradient(145deg, #f3faf6, #e2efe8) !important;
+  border-color: rgba(93, 138, 119, 0.55) !important;
+  transform: translateY(-4px) scale(1.025) !important;
+  box-shadow: 0 14px 28px -8px rgba(93, 138, 119, 0.26),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.95) !important;
+}
+
+.q-bottleneck-pill.q-bn-resolved .q-bn-state {
+  background: linear-gradient(145deg, #5d8a77, #4c7889) !important;
+  color: #ffffff !important;
+}
+
+/* Specular Cursor Spotlight on Clay Cards */
+.clay-card {
+  background-image: radial-gradient(
+      340px circle at var(--mx, 50%) var(--my, -200px),
+      rgba(255, 255, 255, 0.72),
+      transparent 65%
+    ),
+    linear-gradient(145deg, #faf6f1, #f3ece4);
+}
+
+/* Periodic Pearl Sheen Sweep on Primary CTA Buttons */
+@keyframes qBtnSheen {
+  0%,
+  75% {
+    transform: translateX(-140%) skewX(-22deg);
+  }
+  100% {
+    transform: translateX(240%) skewX(-22deg);
+  }
+}
+
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 42%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.28),
+    transparent
+  );
+  transform: translateX(-140%) skewX(-22deg);
+  animation: qBtnSheen 5.5s ease-in-out infinite;
+  pointer-events: none;
+}
+

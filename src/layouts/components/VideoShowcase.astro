@@ -1,74 +1,115 @@
 ---
-// Hero Video Showcase
-// - Autoplay muted + loop (like Automark original)
-// - GSAP scroll animation: starts tilted/scaled, normalizes on scroll (handled by animations.js)
-// - Click button -> toggle overlay button
+// Hero Video Showcase with 3D Floating Telemetry Cards
 ---
 
-<div
-  class="relative w-full max-w-280 mx-auto rounded-[36px] overflow-hidden clay-card p-3"
-  data-gsap-video-showcase
->
-  <div class="relative rounded-[26px] overflow-hidden border border-white/80">
-    <video
-      id="videoPlayer"
-      class="w-full aspect-video object-cover block"
-      autoplay
-      muted
-      loop
-      width="1280"
-      height="720"
-      playsinline
-      preload="metadata"
-      poster="/images/quantum-dashboard-clean.png"
-    >
-      <source src="/showcase.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
+<div class="relative w-full max-w-280 mx-auto">
+  <!-- Floating 3D Telemetry Card 1: Top-Left -->
+  <div
+    class="q-hero-float q-float-1 hidden xl:flex items-center gap-3 px-4 py-3 rounded-2xl clay-card absolute -left-10 top-10 z-20 pointer-events-none"
+    data-parallax-speed="-28"
+  >
+    <span class="size-9 rounded-xl clay-feature-wave grid place-items-center text-xs font-extrabold text-primary">
+      42+
+    </span>
+    <div class="text-left leading-tight">
+      <div class="text-xs font-extrabold text-dark">Jurisdictions Locked</div>
+      <div class="text-[11px] text-text-dark">Sales + Vapor Excise</div>
+    </div>
+  </div>
 
-    <!-- Play / Focus toggle overlay -->
-    <button
-      id="soundToggle"
-      class="absolute inset-0 grid place-items-center group bg-transparent cursor-pointer transition-opacity duration-300"
-      aria-label="Play video"
-    >
-      <div
-        id="mutedIcon"
-        class="transition-all duration-300 group-hover:scale-110 bg-[#faf6f1]/90 hover:bg-[#fffaf4] rounded-full size-20 grid place-items-center relative shadow-lg border border-white/80"
+  <!-- Floating 3D Telemetry Card 2: Top-Right -->
+  <div
+    class="q-hero-float q-float-2 hidden xl:flex items-center gap-3 px-4 py-3 rounded-2xl clay-card absolute -right-10 top-16 z-20 pointer-events-none"
+    data-parallax-speed="24"
+  >
+    <span class="size-9 rounded-xl clay-feature-wave grid place-items-center text-xs font-extrabold text-primary">
+      $0
+    </span>
+    <div class="text-left leading-tight">
+      <div class="text-xs font-extrabold text-dark">$0.00 Variance</div>
+      <div class="text-[11px] text-text-dark">Taxable + Exempt = Gross</div>
+    </div>
+  </div>
+
+  <!-- Floating 3D Telemetry Card 3: Bottom-Left -->
+  <div
+    class="q-hero-float q-float-3 hidden xl:flex items-center gap-3 px-4 py-3 rounded-2xl clay-card absolute -left-8 bottom-10 z-20 pointer-events-none"
+    data-parallax-speed="-18"
+  >
+    <span class="size-9 rounded-xl clay-feature-wave grid place-items-center text-xs font-extrabold text-primary">
+      5T
+    </span>
+    <div class="text-left leading-tight">
+      <div class="text-xs font-extrabold text-dark">5-Tab Portal XLSX</div>
+      <div class="text-[11px] text-text-dark">Generated in &lt; 4 sec</div>
+    </div>
+  </div>
+
+  <div
+    class="q-layered-stack relative w-full rounded-[36px] clay-card p-3 mt-4"
+    data-gsap-video-showcase
+  >
+    <div class="relative rounded-[26px] overflow-hidden border border-white/80">
+      <video
+        id="videoPlayer"
+        class="w-full aspect-video object-cover block"
+        autoplay
+        muted
+        loop
+        width="1280"
+        height="720"
+        playsinline
+        preload="metadata"
+        poster="/images/quantum-dashboard-clean.png"
       >
-        <!-- Spinning ring -->
+        <source src="/showcase.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      <!-- Play / Focus toggle overlay -->
+      <button
+        id="soundToggle"
+        class="absolute inset-0 grid place-items-center group bg-transparent cursor-pointer transition-opacity duration-300"
+        aria-label="Play video"
+      >
         <div
-          class="inset-0 scale-90 transition-transform duration-300 size-full absolute rounded-full border-2 border-solid border-t-transparent border-b-transparent border-primary animate-spin"
-          style="animation-duration: 3s;"
+          id="mutedIcon"
+          class="transition-all duration-300 group-hover:scale-110 bg-[#faf6f1]/90 hover:bg-[#fffaf4] rounded-full size-20 grid place-items-center relative shadow-lg border border-white/80"
         >
+          <!-- Spinning ring -->
+          <div
+            class="inset-0 scale-90 transition-transform duration-300 size-full absolute rounded-full border-2 border-solid border-t-transparent border-b-transparent border-primary animate-spin"
+            style="animation-duration: 3s;"
+          >
+          </div>
+          <!-- Play icon -->
+          <svg
+            width="32"
+            height="32"
+            class="size-8"
+            fill="none"
+            viewBox="0 0 36 36"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M20.9108 9.50547C23.3603 10.897 25.2851 11.9905 26.6564 12.9922C28.037 14.0008 29.0582 15.0549 29.4239 16.4448C29.6921 17.4639 29.6921 18.5361 29.4239 19.5552C29.0582 20.9451 28.037 21.9991 26.6564 23.0077C25.2851 24.0094 23.3603 25.1029 20.9109 26.4945C18.5448 27.8386 16.5495 28.9722 15.0348 29.6166C13.508 30.2659 12.1159 30.5952 10.763 30.2118C9.76878 29.9299 8.86412 29.3952 8.13534 28.6599C7.14629 27.6621 6.74927 26.2828 6.56144 24.6231C6.37497 22.9753 6.37499 20.8185 6.375 18.0751V17.9248C6.37499 15.1815 6.37497 13.0246 6.56144 11.3769C6.74927 9.71712 6.14629 8.33789 8.13534 7.34C8.86412 6.60473 9.76878 6.06996 10.763 5.78822C12.1159 5.40485 13.508 5.73401 15.0348 6.38345C16.5495 7.02771 18.5448 8.16123 20.9108 9.50547Z"
+              fill="url(#vs_gradient)"></path>
+            <defs>
+              <linearGradient
+                id="vs_gradient"
+                x1="18"
+                y1="30.3751"
+                x2="18"
+                y2="5.62488"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop stop-color="var(--color-primary-light)"></stop>
+                <stop offset="1" stop-color="var(--color-primary)"></stop>
+              </linearGradient>
+            </defs>
+          </svg>
         </div>
-        <!-- Play icon -->
-        <svg
-          width="32"
-          height="32"
-          class="size-8"
-          fill="none"
-          viewBox="0 0 36 36"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M20.9108 9.50547C23.3603 10.897 25.2851 11.9905 26.6564 12.9922C28.037 14.0008 29.0582 15.0549 29.4239 16.4448C29.6921 17.4639 29.6921 18.5361 29.4239 19.5552C29.0582 20.9451 28.037 21.9991 26.6564 23.0077C25.2851 24.0094 23.3603 25.1029 20.9109 26.4945C18.5448 27.8386 16.5495 28.9722 15.0348 29.6166C13.508 30.2659 12.1159 30.5952 10.763 30.2118C9.76878 29.9299 8.86412 29.3952 8.13534 28.6599C7.14629 27.6621 6.74927 26.2828 6.56144 24.6231C6.37497 22.9753 6.37499 20.8185 6.375 18.0751V17.9248C6.37499 15.1815 6.37497 13.0246 6.56144 11.3769C6.74927 9.71712 6.14629 8.33789 8.13534 7.34C8.86412 6.60473 9.76878 6.06996 10.763 5.78822C12.1159 5.40485 13.508 5.73401 15.0348 6.38345C16.5495 7.02771 18.5448 8.16123 20.9108 9.50547Z"
-            fill="url(#vs_gradient)"></path>
-          <defs>
-            <linearGradient
-              id="vs_gradient"
-              x1="18"
-              y1="30.3751"
-              x2="18"
-              y2="5.62488"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stop-color="var(--color-primary-light)"></stop>
-              <stop offset="1" stop-color="var(--color-primary)"></stop>
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-    </button>
+      </button>
+    </div>
   </div>
 </div>

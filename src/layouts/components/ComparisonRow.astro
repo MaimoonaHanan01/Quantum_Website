@@ -18,70 +18,121 @@ const stateSchedules = [
   ["Form ST-36", "EC-2 Receipts", "Distributor Inv", "5-Tab XLSX"],
 ];
 
-const meterWidths = ["96%", "92%", "98%", "94%", "90%", "95%"];
+// Effective excise multiplier per $10k batch (wholesale + mL volume equivalent)
+const exciseMultipliers = [0.95, 0.125, 0.7424, 0.35, 0.45, 0.125];
+const meterWidths = ["96%", "86%", "98%", "91%", "90%", "88%"];
 ---
 
 {
   comparisonData.enable && (
-    <section class="section relative isolate overflow-x-hidden">
+    <section class="section relative isolate overflow-x-hidden" data-excise-sim-section>
       <div class="container">
         <div class="section-container">
           <div class="section-intro centralize">
             <h2 class="title hasHighlight" set:html={comparisonData.title} />
           </div>
+
+          <!-- Interactive Live Excise Batch Simulator Bar -->
+          <div class="max-w-210 mx-auto mb-10 px-4">
+            <div class="q-layered-stack clay-card rounded-3xl p-4 sm:px-7 sm:py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div class="flex items-center gap-3">
+                <span class="size-9 rounded-xl clay-feature-wave grid place-items-center text-xs font-extrabold text-primary">
+                  SIM
+                </span>
+                <div>
+                  <div class="text-xs font-extrabold uppercase tracking-wider text-primary">
+                    Interactive Excise Simulator
+                  </div>
+                  <div class="text-sm font-bold text-dark">
+                    Select monthly wholesale &amp; mL batch size:
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-wrap items-center gap-2" data-excise-presets>
+                {[
+                  { label: "$5k Batch", val: 5000 },
+                  { label: "$10k Batch", val: 10000 },
+                  { label: "$25k Batch", val: 25000 },
+                  { label: "$50k Batch", val: 50000 },
+                ].map((preset, i) => (
+                  <button
+                    type="button"
+                    class={`q-sim-btn px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${i === 1 ? "q-wb-tab-active" : "bg-white/80 text-dark hover:bg-white"}`}
+                    data-batch-val={preset.val}
+                  >
+                    {preset.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
           <div class="section-content">
             <div class="flex flex-col gap-y-5 px-4">
-              {comparisonData.items.map(({ title, price }, idx) => (
-                <div
-                  class="q-comparison-row group relative max-lg:border max-lg:border-border max-lg:rounded-3xl max-lg:py-6 transition-transform duration-300 hover:-translate-y-1"
-                  data-comp-row={idx}
-                >
-                  <div class="flex items-center flex-col lg:flex-row lg:justify-between w-full gap-y-6">
-                    <div class="q-comp-left clay-card px-6 w-full py-3.5 rounded-full flex items-center justify-center relative z-10 gap-x-2 max-w-80 transition-all duration-300 group-hover:scale-103 group-hover:border-primary/40">
-                      <span class="font-bold text-dark text-base transition-colors duration-200 group-hover:text-primary">
-                        {title}
-                      </span>
-                    </div>
-
-                    <div class="flex items-center justify-center flex-wrap gap-2.5 xl:gap-3 lg:min-w-95 relative z-10">
-                      {(stateSchedules[idx] ?? stateSchedules[0]).map((tag) => (
-                        <span class="q-comp-tag px-4 py-2 rounded-full bg-[#faf6f1] border border-white/90 text-xs font-semibold text-dark shadow-sm transition-all duration-250 hover:-translate-y-1 hover:bg-primary hover:text-white cursor-default">
-                          {tag}
+              {comparisonData.items.map(({ title, price }, idx) => {
+                const mult = exciseMultipliers[idx] ?? 0.45;
+                const defaultTax = (10000 * mult).toLocaleString("en-US", {
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 0,
+                });
+                return (
+                  <div
+                    class="q-comparison-row group relative max-lg:border max-lg:border-border max-lg:rounded-3xl max-lg:py-6 transition-transform duration-300 hover:-translate-y-1"
+                    data-comp-row={idx}
+                    data-excise-mult={mult}
+                  >
+                    <div class="flex items-center flex-col lg:flex-row lg:justify-between w-full gap-y-6">
+                      <div class="q-comp-left clay-card px-6 w-full py-3.5 rounded-full flex items-center justify-center relative z-10 gap-x-2 max-w-80 transition-all duration-300 group-hover:scale-103 group-hover:border-primary/40">
+                        <span class="font-bold text-dark text-base transition-colors duration-200 group-hover:text-primary">
+                          {title}
                         </span>
-                      ))}
+                      </div>
+
+                      <div class="flex items-center justify-center flex-wrap gap-2.5 xl:gap-3 lg:min-w-95 relative z-10">
+                        {(stateSchedules[idx] ?? stateSchedules[0]).map((tag) => (
+                          <span class="q-comp-tag px-4 py-2 rounded-full bg-[#faf6f1] border border-white/90 text-xs font-semibold text-dark shadow-sm transition-all duration-250 hover:-translate-y-1 hover:bg-primary hover:text-white cursor-default">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div class="q-comp-right clay-card px-6 w-full py-3 rounded-2xl flex flex-col items-center justify-center relative z-10 gap-y-1.5 max-w-68 transition-all duration-300 group-hover:scale-103">
+                        <div class="flex items-center justify-between w-full gap-2">
+                          <span
+                            class="text-primary font-secondary font-bold text-base"
+                            data-count-up={price}
+                          >
+                            {price}
+                          </span>
+                          <span
+                            class="px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-primary/14 text-primary"
+                            data-live-excise
+                          >
+                            ${defaultTax} est.
+                          </span>
+                        </div>
+                        <div class="w-full h-1.5 rounded-full bg-primary/12 overflow-hidden">
+                          <div
+                            class="q-comp-meter h-full rounded-full"
+                            style="width: 0%; background: linear-gradient(90deg, #5d8a77, #4c7889);"
+                            data-meter-width={meterWidths[idx] ?? "95%"}
+                          />
+                        </div>
+                      </div>
                     </div>
 
-                    <div class="q-comp-right clay-card px-6 w-full py-3 rounded-2xl flex flex-col items-center justify-center relative z-10 gap-y-1.5 max-w-64 transition-all duration-300 group-hover:scale-103">
-                      <span class="font-medium text-text text-sm">
-                        <span
-                          class="text-primary font-secondary font-bold text-h6"
-                          data-count-up={price}
-                        >
-                          {price}
-                        </span>{" "}
-                        {comparisonData.price_suffix ?? "Basis"}
-                      </span>
-                      <div class="w-full h-1.5 rounded-full bg-primary/12 overflow-hidden">
+                    <div class="absolute inset-0 items-center -z-10 hidden xl:flex">
+                      <div class="relative w-full h-0.5 bg-border/60 overflow-hidden rounded-full">
                         <div
-                          class="q-comp-meter h-full rounded-full"
-                          style="width: 0%; background: linear-gradient(90deg, #5d8a77, #4c7889);"
-                          data-meter-width={meterWidths[idx] ?? "95%"}
+                          class="q-comp-sweep absolute inset-y-0 left-0 w-0 rounded-full"
+                          style="background: linear-gradient(90deg, rgba(93,138,119,0.2), #5d8a77, #4c7889);"
+                          data-comp-sweep
                         />
                       </div>
                     </div>
                   </div>
-
-                  <div class="absolute inset-0 items-center -z-10 hidden xl:flex">
-                    <div class="relative w-full h-0.5 bg-border/60 overflow-hidden rounded-full">
-                      <div
-                        class="q-comp-sweep absolute inset-y-0 left-0 w-0 rounded-full"
-                        style="background: linear-gradient(90deg, rgba(93,138,119,0.2), #5d8a77, #4c7889);"
-                        data-comp-sweep
-                      />
-                    </div>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

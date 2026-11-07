@@ -93,54 +93,52 @@ const { checklist_form_action } = config.params;
               />
               <p class="subtitle">{homepageData.main_features.content}</p>
             </div>
-            <div class="section-content">
+            <div class="section-content" data-bottleneck-deck>
               <div class="feature-items-group mb-9">
-                {homepageData.main_features.items
-                  .slice(0, 3)
-                  .map((text: string) => (
-                    <div class="bg-body border border-border px-4 w-full py-2.5 rounded-full flex items-center justify-center relative z-10 gap-x-2">
-                      <svg
-                        class="shrink-0"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M9.99999 1.04163C14.9476 1.04163 18.9583 5.05241 18.9583 9.99996C18.9583 14.9475 14.9476 18.9583 9.99999 18.9583C5.05244 18.9583 1.04166 14.9475 1.04166 9.99996C1.04166 5.05241 5.05244 1.04163 9.99999 1.04163ZM8.02571 6.8538C7.69841 6.58685 7.2159 6.6057 6.9108 6.91077C6.60581 7.21587 6.5869 7.6984 6.85383 8.02568L6.9108 8.08915L8.82157 9.99996L6.91161 11.9108C6.5863 12.2362 6.58619 12.7638 6.91161 13.0891C7.23705 13.4143 7.76464 13.4145 8.09 13.0891L9.99999 11.1784L11.91 13.0891L11.9735 13.1461C12.3007 13.413 12.7832 13.394 13.0884 13.0891C13.3934 12.7842 13.4128 12.3015 13.1462 11.9742L13.0884 11.9108L11.1776 9.99996L13.0892 8.08915L13.1462 8.02568C13.4131 7.69839 13.3942 7.21587 13.0892 6.91077C12.7841 6.6057 12.3016 6.58685 11.9742 6.8538L11.9108 6.91077L9.99999 8.82154L8.08918 6.91077L8.02571 6.8538Z"
-                          fill="var(--color-secondary)"
-                        />
-                      </svg>
-                      <span class="font-semibold text-white text-lg">
-                        {text}
-                      </span>
-                    </div>
-                  ))}
+                {[
+                  { bad: "Unmapped County Codes", good: "100% Locality Auto-Mapped" },
+                  { bad: "Missing SKU Cost or mL", good: "445 SKUs Auto-Flagged" },
+                  { bad: "Duplicate State Rows", good: "Composite Key Deduplicated" },
+                ].map((item, idx) => (
+                  <div
+                    class="q-bottleneck-pill bg-body border border-border px-5 w-full py-3 rounded-full flex items-center justify-between relative z-10 gap-x-3"
+                    data-bottleneck-pill={idx}
+                  >
+                    <span class="q-bn-state px-2.5 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-secondary/15 text-secondary shrink-0 transition-all duration-300">
+                      Legacy
+                    </span>
+                    <span
+                      class="q-bn-label font-semibold text-white text-base text-center flex-1 transition-all duration-300"
+                      data-bad={item.bad}
+                      data-good={item.good}
+                    >
+                      {item.bad}
+                    </span>
+                  </div>
+                ))}
               </div>
               <div class="feature-items-group">
-                {homepageData.main_features.items
-                  .slice(3)
-                  .map((text: string) => (
-                    <div class="bg-body border border-border px-4 w-full py-2.5 rounded-full flex items-center justify-center relative z-10 gap-x-2">
-                      <svg
-                        class="shrink-0"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M9.99999 1.04163C14.9476 1.04163 18.9583 5.05241 18.9583 9.99996C18.9583 14.9475 14.9476 18.9583 9.99999 18.9583C5.05244 18.9583 1.04166 14.9475 1.04166 9.99996C1.04166 5.05241 5.05244 1.04163 9.99999 1.04163ZM8.02571 6.8538C7.69841 6.58685 7.2159 6.6057 6.9108 6.91077C6.60581 7.21587 6.5869 7.6984 6.85383 8.02568L6.9108 8.08915L8.82157 9.99996L6.91161 11.9108C6.5863 12.2362 6.58619 12.7638 6.91161 13.0891C7.23705 13.4143 7.76464 13.4145 8.09 13.0891L9.99999 11.1784L11.91 13.0891L11.9735 13.1461C12.3007 13.413 12.7832 13.394 13.0884 13.0891C13.3934 12.7842 13.4128 12.3015 13.1462 11.9742L13.0884 11.9108L11.1776 9.99996L13.0892 8.08915L13.1462 8.02568C13.4131 7.69839 13.3942 7.21587 13.0892 6.91077C12.7841 6.6057 12.3016 6.58685 11.9742 6.8538L11.9108 6.91077L9.99999 8.82154L8.08918 6.91077L8.02571 6.8538Z"
-                          fill="var(--color-secondary)"
-                        />
-                      </svg>
-                      <span class="font-semibold text-white text-lg">
-                        {text}
-                      </span>
-                    </div>
-                  ))}
+                {[
+                  { bad: "Missed PACT Deadlines", good: "Auto-Dispatched 4d Early" },
+                  { bad: "Retroactive Rate Drift", good: "Effective-Dated Rule Lock" },
+                  { bad: "Collected vs Computed Gaps", good: "$0.00 Variance Reconciled" },
+                ].map((item, idx) => (
+                  <div
+                    class="q-bottleneck-pill bg-body border border-border px-5 w-full py-3 rounded-full flex items-center justify-between relative z-10 gap-x-3"
+                    data-bottleneck-pill={idx + 3}
+                  >
+                    <span class="q-bn-state px-2.5 py-0.5 rounded-full text-[11px] font-extrabold uppercase tracking-wider bg-secondary/15 text-secondary shrink-0 transition-all duration-300">
+                      Legacy
+                    </span>
+                    <span
+                      class="q-bn-label font-semibold text-white text-base text-center flex-1 transition-all duration-300"
+                      data-bad={item.bad}
+                      data-good={item.good}
+                    >
+                      {item.bad}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
