@@ -194,7 +194,125 @@ import { sporeCanvas } from "./particleCanvas.js";
     });
   }
 
-  // 5. Signature Animation #2: Animated SVG Pipeline Flow (3-Step Monthly Close)
+  // 5. Signature Animation #2: Value Proposition 3D Fan Unfold
+  function valueDeckUnfold() {
+    const grid = document.querySelector("[data-value-grid]");
+    if (!grid) return;
+
+    const cards = grid.querySelectorAll("[data-value-card]");
+    if (!cards.length) return;
+
+    cards.forEach((card, i) => {
+      const offsetIdx = i - (cards.length - 1) / 2;
+      const bar = card.querySelector(".q-val-bar");
+
+      gsap.fromTo(
+        card,
+        {
+          x: -offsetIdx * 45,
+          y: 34,
+          rotationZ: offsetIdx * 4,
+          opacity: 0,
+          force3D: true,
+        },
+        {
+          x: 0,
+          y: 0,
+          rotationZ: 0,
+          opacity: 1,
+          force3D: true,
+          duration: 0.65,
+          delay: i * 0.07,
+          ease: "power3.out",
+          clearProps: "transform",
+          scrollTrigger: {
+            trigger: grid,
+            start: "top 86%",
+            once: true,
+          },
+          onComplete: () => {
+            if (bar) {
+              gsap.to(bar, {
+                width: "100%",
+                duration: 0.7,
+                ease: "power2.out",
+              });
+            }
+          },
+        },
+      );
+    });
+  }
+
+  // 6. Signature Animation #3: 9-Cell Compliance Matrix Scanner
+  function matrixScannerCycle() {
+    const matrix = document.querySelector("[data-feature-matrix]");
+    if (!matrix) return;
+
+    const cells = Array.from(matrix.querySelectorAll("[data-feature-cell]"));
+    if (!cells.length) return;
+
+    let idx = 0;
+    let timer = null;
+    let isHovered = false;
+
+    const highlightCell = (activeIdx) => {
+      cells.forEach((cell, i) => {
+        const bar = cell.querySelector(".q-cell-bar");
+        if (i === activeIdx) {
+          cell.classList.add("q-matrix-active");
+          if (bar) {
+            gsap.killTweensOf(bar);
+            gsap.fromTo(
+              bar,
+              { width: "0%" },
+              {
+                width: "100%",
+                duration: isHovered ? 0.28 : 1.75,
+                ease: "linear",
+              },
+            );
+          }
+        } else {
+          cell.classList.remove("q-matrix-active");
+          if (bar) {
+            gsap.killTweensOf(bar);
+            gsap.set(bar, { width: "0%" });
+          }
+        }
+      });
+    };
+
+    const startScan = () => {
+      if (timer) clearInterval(timer);
+      highlightCell(idx);
+      timer = setInterval(() => {
+        if (isHovered) return;
+        idx = (idx + 1) % cells.length;
+        highlightCell(idx);
+      }, 1850);
+    };
+
+    cells.forEach((cell, i) => {
+      cell.addEventListener("mouseenter", () => {
+        isHovered = true;
+        idx = i;
+        highlightCell(i);
+      });
+      cell.addEventListener("mouseleave", () => {
+        isHovered = false;
+      });
+    });
+
+    ScrollTrigger.create({
+      trigger: matrix,
+      start: "top 86%",
+      once: true,
+      onEnter: startScan,
+    });
+  }
+
+  // 7. Signature Animation #4: Animated SVG Pipeline Flow (3-Step Monthly Close)
   function pipelineFlowAnimation() {
     const grid = document.querySelector("[data-pipeline-grid]");
     if (!grid) return;
@@ -241,7 +359,7 @@ import { sporeCanvas } from "./particleCanvas.js";
     });
   }
 
-  // 6. Signature Animation #3: Live Number Counters & Meter Bars
+  // 8. Signature Animation #5: Live Number Counters & Meter Bars
   function liveCountersAndMeters() {
     const counters = document.querySelectorAll("[data-count-up]");
     counters.forEach((el) => {
@@ -301,7 +419,7 @@ import { sporeCanvas } from "./particleCanvas.js";
     });
   }
 
-  // 7. Signature Animation #4: Auto-Cycling Module Spotlight (8 Workspace Modules)
+  // 9. Signature Animation #6: Auto-Cycling Module Spotlight (8 Workspace Modules)
   function moduleSpotlightCycle() {
     const grid = document.querySelector("[data-module-grid]");
     if (!grid) return;
@@ -369,7 +487,134 @@ import { sporeCanvas } from "./particleCanvas.js";
     });
   }
 
-  // 8. Signature Animation #5: Live Comparison Sweep (Quantum vs. Legacy)
+  // 10. Signature Animation #7: Interactive 5-Tab Workbook Switcher Deck
+  function workbookTabSwitcher() {
+    const widget = document.querySelector("[data-workbook-widget]");
+    if (!widget) return;
+
+    const tabs = Array.from(widget.querySelectorAll("[data-wb-tab]"));
+    const panels = Array.from(widget.querySelectorAll("[data-wb-panel]"));
+    const progressBar = widget.querySelector(".q-wb-progress");
+    if (!tabs.length || !panels.length) return;
+
+    let activeIdx = 0;
+    let timer = null;
+    let paused = false;
+
+    const showTab = (idx) => {
+      activeIdx = idx;
+      tabs.forEach((t, i) => {
+        if (i === idx) {
+          t.classList.add("q-wb-tab-active");
+          t.classList.remove("bg-white/75", "text-dark");
+        } else {
+          t.classList.remove("q-wb-tab-active");
+          t.classList.add("bg-white/75", "text-dark");
+        }
+      });
+
+      panels.forEach((p, i) => {
+        if (i === idx) {
+          p.classList.remove("hidden");
+          p.classList.add("block");
+          gsap.fromTo(
+            p,
+            { y: 8, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.26, ease: "power2.out", clearProps: "transform" },
+          );
+        } else {
+          p.classList.add("hidden");
+          p.classList.remove("block");
+        }
+      });
+
+      if (progressBar) {
+        gsap.killTweensOf(progressBar);
+        gsap.fromTo(
+          progressBar,
+          { width: "0%" },
+          { width: "100%", duration: paused ? 0.35 : 2.7, ease: "linear" },
+        );
+      }
+    };
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => {
+        paused = true;
+        showTab(i);
+      });
+      tab.addEventListener("mouseenter", () => {
+        paused = true;
+        showTab(i);
+      });
+    });
+
+    widget.addEventListener("mouseleave", () => {
+      paused = false;
+    });
+
+    ScrollTrigger.create({
+      trigger: widget,
+      start: "top 88%",
+      once: true,
+      onEnter: () => {
+        showTab(0);
+        timer = setInterval(() => {
+          if (paused) return;
+          showTab((activeIdx + 1) % tabs.length);
+        }, 2800);
+      },
+    });
+  }
+
+  // 11. Signature Animation #8: Core Engine Principles Sequential Pulse
+  function principlesCascadeCycle() {
+    const stack = document.querySelector("[data-principles-stack]");
+    if (!stack) return;
+
+    const pills = Array.from(stack.querySelectorAll("[data-principle-pill]"));
+    if (!pills.length) return;
+
+    let idx = 0;
+    let isHovered = false;
+
+    const activatePill = (activeIdx) => {
+      pills.forEach((p, i) => {
+        if (i === activeIdx) {
+          p.classList.add("q-principle-active");
+        } else {
+          p.classList.remove("q-principle-active");
+        }
+      });
+    };
+
+    pills.forEach((p, i) => {
+      p.addEventListener("mouseenter", () => {
+        isHovered = true;
+        idx = i;
+        activatePill(i);
+      });
+      p.addEventListener("mouseleave", () => {
+        isHovered = false;
+      });
+    });
+
+    ScrollTrigger.create({
+      trigger: stack,
+      start: "top 88%",
+      once: true,
+      onEnter: () => {
+        activatePill(0);
+        setInterval(() => {
+          if (isHovered) return;
+          idx = (idx + 1) % pills.length;
+          activatePill(idx);
+        }, 1900);
+      },
+    });
+  }
+
+  // 12. Signature Animation #9: Live Comparison Sweep (Quantum vs. Legacy)
   function comparisonSweepAnimation() {
     const rows = document.querySelectorAll(".q-comparison-row");
     rows.forEach((row, i) => {
@@ -433,7 +678,7 @@ import { sporeCanvas } from "./particleCanvas.js";
     });
   }
 
-  // 9. General Section Cascades & Testimonial Quote Reveal
+  // 13. General Section Cascades & Testimonial Quote Reveal
   function sectionCascades() {
     const pillGroups = document.querySelectorAll(".feature-items-group");
     pillGroups.forEach((group, idx) => {
@@ -504,7 +749,7 @@ import { sporeCanvas } from "./particleCanvas.js";
     const sections = document.querySelectorAll(".section, .section-box");
     sections.forEach((sec) => {
       const cards = sec.querySelectorAll(
-        ".clay-card:not([data-gsap-video-showcase]):not([data-bn-card]):not(.q-module-card):not(.q-process-card):not(.q-comp-left):not(.q-comp-right), .accordion, .blob-message",
+        ".clay-card:not([data-gsap-video-showcase]):not([data-bn-card]):not(.q-module-card):not(.q-process-card):not(.q-value-card):not(.q-comp-left):not(.q-comp-right), .accordion, .blob-message",
       );
       if (cards.length) {
         gsap.fromTo(
@@ -590,7 +835,7 @@ import { sporeCanvas } from "./particleCanvas.js";
     });
   }
 
-  // 10. Magnetic Buttons
+  // 14. Magnetic Buttons
   function interactiveClayEffects() {
     if (window.innerWidth < 1024) return;
 
@@ -628,12 +873,12 @@ import { sporeCanvas } from "./particleCanvas.js";
     });
   }
 
-  // 11. Particle spore canvas effect (disabled for clean background)
+  // 15. Particle spore canvas effect (disabled for clean background)
   function sporesEffect() {
     sporeCanvas(".heroSporeCanvas", 42, 0.8, 2.0, 0.08, 0.28);
   }
 
-  // 12. Pricing toggle: Monthly <-> Yearly
+  // 16. Pricing toggle: Monthly <-> Yearly
   function pricingToggle() {
     const toggle = document.querySelector("[data-pricing-toggle]");
     const labels = document.querySelectorAll(".price-toggler-btn");
@@ -689,9 +934,13 @@ import { sporeCanvas } from "./particleCanvas.js";
     heroVideo();
     kineticTypography();
     stickyStackingDeck();
+    valueDeckUnfold();
+    matrixScannerCycle();
     pipelineFlowAnimation();
     liveCountersAndMeters();
     moduleSpotlightCycle();
+    workbookTabSwitcher();
+    principlesCascadeCycle();
     comparisonSweepAnimation();
     sectionCascades();
     interactiveClayEffects();

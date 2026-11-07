@@ -4,16 +4,32 @@ interface Props {
   logo: string;
   title: string;
   list?: string[];
+  cardIndex?: number;
 }
-const { logo, title, list } = Astro.props;
+const { logo, title, list, cardIndex = 0 } = Astro.props;
+const numStr = `0${cardIndex + 1}`;
 ---
 
-<div class="p-8 rounded-[26px] clay-card">
-  <div class="size-12 rounded-2xl bg-white/75 grid place-items-center mb-6 shadow-sm">
-    <ImageMod src={logo} alt={`${title} icon`} class="size-6" />
+<div
+  class="q-value-card q-layered-stack p-8 rounded-[26px] clay-card relative mt-4"
+  data-value-card={cardIndex}
+>
+  <div class="flex items-center justify-between mb-6">
+    <div class="size-12 rounded-2xl clay-feature-wave grid place-items-center shadow-sm">
+      <ImageMod src={logo} alt={`${title} icon`} class="size-6" />
+    </div>
+    <span class="text-[2.4rem] font-extrabold t-stroke text-transparent leading-none select-none">
+      {numStr}
+    </span>
   </div>
   <h3 class="text-h5-sm font-bold text-dark">{title}</h3>
   <ul class="stars-list mt-5 text-text">
     {list?.map((item) => <li>{item}</li>)}
   </ul>
+  <div class="w-full h-1 rounded-full bg-primary/12 overflow-hidden mt-5">
+    <div
+      class="q-val-bar h-full rounded-full"
+      style="width: 0%; background: linear-gradient(90deg, #5d8a77, #4c7889);"
+    />
+  </div>
 </div>

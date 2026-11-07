@@ -4,43 +4,49 @@ interface Props {
   logo: string;
   title: string;
   is_starred: boolean;
+  cellIndex?: number;
 }
-const { logo, title, is_starred } = Astro.props;
+const { logo, title, is_starred, cellIndex = 0 } = Astro.props;
+
+const cellBadges = [
+  "400-Row Stream",
+  "Composite Key",
+  "Effective-Dated",
+  "$0.00 Variance",
+  "5-Tab XLSX",
+  "PACT Dispatch",
+  "AES-256 + TOTP",
+  "Sub-15ms P99",
+  "Audit Lineage",
+];
+const badgeText = cellBadges[cellIndex] ?? "Verified";
 ---
 
 <div
-  class={`group q-feature-cell p-8 xl:px-10 xl:py-11 border-t border-l border-border/60 relative transition-all duration-300 hover:-translate-y-1.5 ${is_starred ? "clay-feature-wave rounded-2xl shadow-md" : "hover:bg-[#faf6f1] hover:rounded-2xl hover:shadow-lg hover:z-10"}`}
+  class={`group q-feature-cell p-8 xl:px-10 xl:py-10 border-t border-l border-border/60 relative transition-all duration-300 ${is_starred ? "clay-feature-wave rounded-2xl shadow-md" : ""}`}
+  data-feature-cell={cellIndex}
 >
-  <div class="size-13 rounded-2xl bg-white/85 grid place-items-center mb-5 mx-auto shadow-sm transition-all duration-300 group-hover:scale-115 group-hover:-rotate-6 group-hover:bg-white group-hover:shadow-md">
+  <div class="flex items-center justify-between mb-5">
+    <span class="px-3 py-1 rounded-full text-[11px] font-bold tracking-wide uppercase bg-white/85 text-primary border border-primary/20 shadow-2xs">
+      {badgeText}
+    </span>
+    <span class="text-xs font-extrabold text-primary/55">
+      0{cellIndex + 1}
+    </span>
+  </div>
+  <div class="q-cell-icon size-13 rounded-2xl bg-white/85 grid place-items-center mb-5 mx-auto shadow-sm transition-all duration-300 group-hover:scale-115 group-hover:-rotate-6 group-hover:bg-white group-hover:shadow-md">
     <ImageMod src={logo} alt={`${title} icon`} class="size-6 transition-transform duration-300 group-hover:scale-110" />
   </div>
-  <h3 class="text-h5-sm font-bold mb-2 text-center text-dark transition-colors duration-200 group-hover:text-primary">{title}</h3>
+  <h3 class="text-h5-sm font-bold mb-2 text-center text-dark transition-colors duration-200 group-hover:text-primary">
+    {title}
+  </h3>
   <p class="text-center text-text-dark text-sm">
     Automated calculation, reconciliation, and audit-ready schedules.
   </p>
-  <div class="w-0 h-1 bg-primary/70 rounded-full mx-auto mt-5 transition-all duration-300 group-hover:w-14"></div>
-  {
-    [
-      "top-0 left-0 -translate-x-1/2 -translate-y-1/2",
-      "top-0 right-0 translate-x-1/2 -translate-y-1/2",
-      "bottom-0 left-0 -translate-x-1/2 translate-y-1/2",
-      "bottom-0 right-0 translate-x-1/2 translate-y-1/2",
-    ].map((pos) => (
-      <svg
-        data-is-starred={String(is_starred)}
-        class={`absolute z-10 ${pos} hidden`}
-        width="23"
-        height="23"
-        viewBox="0 0 23 23"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          opacity="0.7"
-          d="M11.5 0C11.5 0 11.3776 6.44974 13.9639 9.03606C16.5503 11.6224 23 11.5 23 11.5C23 11.5 16.5503 11.3776 13.9639 13.9639C11.3776 16.5503 11.5 23 11.5 23C11.5 23 11.6224 16.5503 9.03606 13.9639C6.44974 11.3776 0 11.5 0 11.5C0 11.5 6.44974 11.6224 9.03606 9.03606C11.6224 6.44974 11.5 0 11.5 0Z"
-          fill="var(--color-primary)"
-        />
-      </svg>
-    ))
-  }
+  <div class="w-16 h-1 bg-primary/15 rounded-full mx-auto mt-5 overflow-hidden">
+    <div
+      class="q-cell-bar h-full rounded-full"
+      style="width: 0%; background: linear-gradient(90deg, #5d8a77, #4c7889);"
+    />
+  </div>
 </div>

@@ -18,17 +18,23 @@ const { our_features } = Astro.props;
       </div>
       <div class="section-content">
         <div
-          class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 border-r border-text-light/5 border-b"
+          class="q-layered-stack clay-card rounded-[32px] p-4 sm:p-6 mt-5"
+          data-feature-matrix
         >
-          {
-            our_features.items.map((item) => (
-              <FeatureCard
-                logo={item.logo}
-                title={item.title}
-                is_starred={item.is_starred}
-              />
-            ))
-          }
+          <div
+            class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 border-r border-border/60 border-b rounded-2xl overflow-hidden"
+          >
+            {
+              our_features.items.map((item, idx) => (
+                <FeatureCard
+                  logo={item.logo}
+                  title={item.title}
+                  is_starred={item.is_starred}
+                  cellIndex={idx}
+                />
+              ))
+            }
+          </div>
         </div>
       </div>
     </div>

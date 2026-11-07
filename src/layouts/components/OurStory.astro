@@ -1,5 +1,4 @@
 ---
-import ImageMod from "@/layouts/components/ImageMod.astro";
 import { getListPage } from "@/lib/contentParser.astro";
 import type { OurStorySection } from "@/types";
 
@@ -18,12 +17,12 @@ if (!ourStoryData.enable) return;
         />
       </div>
       <div class="section-content">
-        <div class="relative max-w-220 mx-auto clay-card p-8 py-14 xl:px-16 rounded-[36px]">
+        <div class="q-layered-stack relative max-w-220 mx-auto clay-card p-8 py-14 xl:px-16 rounded-[36px] mt-8">
           <div
             class="flex flex-col items-center text-center lg:max-w-3xl mx-auto"
           >
             <div>
-              <div class="size-20 rounded-3xl clay-feature-wave grid place-items-center mb-5 mx-auto">
+              <div class="size-20 rounded-3xl clay-feature-wave grid place-items-center mb-5 mx-auto shadow-md">
                 <img
                   width="48"
                   height="48"
@@ -49,11 +48,23 @@ if (!ourStoryData.enable) return;
                       {ourStoryData.letter_points_title ??
                         "Core Engine Principles:"}
                     </div>
-                    <div class="flex flex-col gap-y-4 relative vertical-bg-line w-full max-w-md">
-                      {ourStoryData.letter_points.map((point) => (
-                        <div class="clay-card px-8 w-full py-3 rounded-full flex items-center justify-center relative z-10 gap-x-2">
-                          <span class="font-semibold text-dark text-base">
+                    <div
+                      class="flex flex-col gap-y-4 relative vertical-bg-line w-full max-w-md"
+                      data-principles-stack
+                    >
+                      {ourStoryData.letter_points.map((point, idx) => (
+                        <div
+                          class="q-principle-pill clay-card px-8 w-full py-3.5 rounded-full flex items-center justify-between relative z-10 gap-x-3 transition-all duration-300"
+                          data-principle-pill={idx}
+                        >
+                          <span class="size-6 rounded-full bg-primary/15 text-primary text-xs font-extrabold grid place-items-center shrink-0">
+                            0{idx + 1}
+                          </span>
+                          <span class="font-semibold text-dark text-base text-center flex-1">
                             {point}
+                          </span>
+                          <span class="text-xs font-bold text-primary/70 uppercase tracking-wider shrink-0">
+                            Locked
                           </span>
                         </div>
                       ))}

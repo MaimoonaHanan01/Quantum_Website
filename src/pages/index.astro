@@ -163,12 +163,13 @@ const { checklist_form_action } = config.params;
               <p class="subtitle">{homepageData.value_props.content}</p>
             </div>
             <div class="section-content">
-              <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 mb-9">
-                {homepageData.value_props.items.map((item: any) => (
+              <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 mb-9" data-value-grid>
+                {homepageData.value_props.items.map((item: any, idx: number) => (
                   <ValueCard
                     logo={item.logo}
                     title={item.title}
                     list={item.list}
+                    cardIndex={idx}
                   />
                 ))}
               </div>
@@ -206,7 +207,7 @@ const { checklist_form_action } = config.params;
               />
             </div>
             <div class="section-content">
-              <div class="relative max-w-220 mx-auto clay-card rounded-3xl my-4">
+              <div class="q-layered-stack relative max-w-220 mx-auto clay-card rounded-3xl my-8">
                 <blockquote class="text-center text-h5 lg:text-h4 font-semibold p-8 xl:p-12 xl:px-16">
                   "{homepageData.testimonial_quote.quote}"
                 </blockquote>
@@ -260,7 +261,7 @@ const { checklist_form_action } = config.params;
                   </div>
                 </div>
                 <div class="lg:col-7 max-lg:mt-10">
-                  <div class="rounded-4xl clay-card px-8 py-10">
+                  <div class="q-layered-stack rounded-4xl clay-card px-8 py-10 mt-5">
                     <div class="text-primary">
                       <svg
                         width="45"
