@@ -1,6 +1,6 @@
 ---
 title: "Contact"
-meta_title: "Contact - Quantum Tax & Excise Engine"
+meta_title: "Contact - ExciseR.com — Bringing equilibrium to nuanced taxes"
 description: "Questions about multi-state sales tax, vapor excise, or PACT Act automation."
 image: ""
 draft: false
@@ -14,8 +14,8 @@ contact_info:
   items:
     - type: "email"
       title: "Email Tax Ops"
-      detail: "ops@maxvapor.com"
-      link: "mailto:ops@maxvapor.com"
+      detail: "ops@exciser.com"
+      link: "mailto:ops@exciser.com"
       icon: "FaEnvelope"
     - type: "phone"
       title: "Direct Line"
@@ -24,7 +24,7 @@ contact_info:
       icon: "FaPhone"
     - type: "calendar"
       title: "Live Workspace"
-      detail: "Open the Quantum Dashboard"
+      detail: "Open ExciseR.com"
       link: "https://maxvapor-tax.vercel.app/"
       icon: "FaCalendarCheck"
 ---

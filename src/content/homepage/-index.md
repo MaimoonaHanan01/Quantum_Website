@@ -4,7 +4,7 @@ banner:
   content: "Drop your monthly exports. Reconcile 42+ states, compute wholesale and mL excise, and download 5-tab filing workbooks in seconds."
   button_primary:
     enable: true
-    label: "Open Quantum Dashboard"
+    label: "Open ExciseR.com"
     link: "https://maxvapor-tax.vercel.app/"
   button_secondary:
     enable: true
@@ -89,7 +89,7 @@ our_features:
 testimonial_quote:
   enable: true
   title: "Built so finance teams never touch <strong>Fragile VLOOKUPs Again</strong>"
-  quote: "Before Quantum, reconciling 42 state returns and calculating mL-based vapor excise took our accounting team nine days every month. Now we upload the Avalara ZIP and download every 5-tab workbook in under four minutes."
+  quote: "Before ExciseR.com, reconciling 42 state returns and calculating mL-based vapor excise took our accounting team nine days every month. Now we upload the Avalara ZIP and download every 5-tab workbook in under four minutes."
 
 single_testimonial:
   enable: true
@@ -101,7 +101,7 @@ single_testimonial:
     - value: "100%"
       label: "Gross-to-Taxable Accuracy"
   testimonial:
-    quote: "Quantum caught 445 SKUs missing wholesale cost before we filed Washington and Illinois, saving us from understating excise and facing audit penalties."
+    quote: "ExciseR.com caught 445 SKUs missing wholesale cost before we filed Washington and Illinois, saving us from understating excise and facing audit penalties."
     avatar: "/images/avatar.png"
     name: "Marcus Vance"
     company: "Multi-State Vapor Distributor"
@@ -121,7 +121,7 @@ growth_process:
       content: "Export the 5-tab Excel workbook, copy line values into each state portal, and log confirmation numbers."
   button:
     enable: true
-    label: "Open Live Quantum App"
+    label: "Open Live ExciseR.com App"
     link: "https://maxvapor-tax.vercel.app/"
 
 integrations:
@@ -148,7 +148,7 @@ integrations:
 lead_generation:
   enable: true
   title: "Inspect a Real <strong>5-Tab Filing Workbook</strong>"
-  subtitle: "See how Quantum structures every state return before you file."
+  subtitle: "See how ExciseR.com structures every state return before you file."
   content: |
     Every monthly calculation produces a standardized 5-tab Excel workbook engineered for state Department of Revenue portals and external auditors.
   list:

@@ -1,6 +1,6 @@
 {
   "site": {
-    "title": "Quantum",
+    "title": "ExciseR.com",
     "base_url": "https://maxvapor-tax.vercel.app",
     "base_path": "/",
     "trailing_slash": false,
@@ -8,7 +8,7 @@
     "logo": "/images/quantum-logo-600.png",
     "logo_width": "154",
     "logo_height": "40",
-    "logo_text": "Quantum"
+    "logo_text": "ExciseR.com"
   },
   "settings": {
     "sticky_header": true
@@ -17,14 +17,14 @@
     "contact_form_action": "#",
     "checklist_form_action": "#",
     "apply_form_action": "#",
-    "copyright": "Copyright &copy; 2026 <strong>Quantum Tax Engine</strong>. All Rights Reserved.",
-    "footer_tagline": "Multi-state sales tax, vapor excise, and PACT Act automation.",
-    "footer_email": "ops@maxvapor.com",
+    "copyright": "Copyright &copy; 2026 <strong>ExciseR.com</strong>. All Rights Reserved.",
+    "footer_tagline": "Bringing equilibrium to nuanced taxes — multi-state sales tax, vapor excise, and PACT Act automation.",
+    "footer_email": "ops@exciser.com",
     "footer_phone": "(+1) 800-555-0199"
   },
   "navigation_button": {
     "enable": true,
-    "label": "Open Quantum App",
+    "label": "Open ExciseR.com",
     "link": "https://maxvapor-tax.vercel.app/"
   },
   "google_tag_manager": {
@@ -32,8 +32,8 @@
     "gtm_id": "GTM-XXXXXX"
   },
   "metadata": {
-    "meta_author": "Quantum",
+    "meta_author": "ExciseR.com",
     "meta_image": "/images/quantum-dashboard-live.jpg",
-    "meta_description": "Multi-state sales tax, vapor excise, and PACT Act filing engine."
+    "meta_description": "ExciseR.com — Bringing equilibrium to nuanced taxes. Multi-state sales tax, vapor excise, and PACT Act filing engine."
   }
 }

@@ -1,7 +1,7 @@
 ---
 title: "Integrations"
-meta_title: "Integrations - Quantum Tax & Excise Engine"
-description: "Connect Quantum with Avalara, Shopify, PrestaShop, Gmail PACT dispatch, and custom ERPs."
+meta_title: "Integrations - ExciseR.com — Bringing equilibrium to nuanced taxes"
+description: "Connect ExciseR.com with Avalara, Shopify, PrestaShop, Gmail PACT dispatch, and custom ERPs."
 image: ""
 draft: false
 

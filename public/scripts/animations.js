@@ -185,7 +185,7 @@ import { sporeCanvas } from "./particleCanvas.js";
 
       if (resolved) {
         pill.classList.add("q-bn-resolved");
-        stateEl.textContent = "Quantum";
+        stateEl.textContent = "ExciseR.com";
         labelEl.textContent = labelEl.getAttribute("data-good") || "";
       } else {
         pill.classList.remove("q-bn-resolved");

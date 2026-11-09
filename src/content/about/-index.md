@@ -1,13 +1,13 @@
 ---
-title: "About Quantum"
-meta_title: "About - Quantum Sales Tax & Excise Engine"
-description: "Deterministic multi-state sales tax, vapor excise, and PACT Act automation."
+title: "About ExciseR.com"
+meta_title: "About - ExciseR.com — Bringing equilibrium to nuanced taxes"
+description: "Bringing equilibrium to nuanced taxes — deterministic multi-state sales tax, vapor excise, and PACT Act automation."
 image: ""
 draft: false
 
 page_header:
   title: "Precision Tax & Excise <strong>Automation.</strong>"
-  subtitle: "Quantum replaces fragile spreadsheets with a deterministic calculation and filing engine built for multi-state distributors and e-commerce operators."
+  subtitle: "ExciseR.com replaces fragile spreadsheets with a deterministic calculation and filing engine built for multi-state distributors and e-commerce operators."
   image: "/images/quantum-dashboard-live.jpg"
 
 stats:

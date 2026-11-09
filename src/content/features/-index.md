@@ -1,7 +1,7 @@
 ---
 title: "Features"
-meta_title: "Features - Quantum Sales Tax & Excise Engine"
-description: "Deterministic multi-state sales tax, vapor excise, and PACT Act automation."
+meta_title: "Features - ExciseR.com — Bringing equilibrium to nuanced taxes"
+description: "Bringing equilibrium to nuanced taxes — deterministic multi-state sales tax, vapor excise, and PACT Act automation."
 image: ""
 draft: false
 
@@ -10,7 +10,7 @@ banner:
   content: "From raw Avalara and Shopify exports to 5-tab state filing workbooks and automated PACT Act dispatches."
   button_primary:
     enable: true
-    label: "Open Quantum Dashboard"
+    label: "Open ExciseR.com"
     link: "https://maxvapor-tax.vercel.app/"
   button_secondary:
     enable: true
@@ -25,7 +25,7 @@ partners:
 
 smart_platform:
   enable: true
-  title: "Automate every step of your <br /> monthly filing with <strong>Quantum.</strong>"
+  title: "Automate every step of your <br /> monthly filing with <strong>ExciseR.com.</strong>"
   cards:
     - title: "Vapor Excise Rules"
       subtitle: "Compute wholesale %, per-mL volume, and bifurcated open/closed excise automatically."

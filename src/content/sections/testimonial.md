@@ -6,7 +6,7 @@ testimonials:
   - name: "Marcus Vance"
     designation: "VP of Finance, Vapor Distribution"
     poster: "/images/testimonials/1.png"
-    content: "Washington's 95% wholesale excise and New Jersey's bifurcated open/closed split used to take days of manual pivot tables. Quantum computes both automatically."
+    content: "Washington's 95% wholesale excise and New Jersey's bifurcated open/closed split used to take days of manual pivot tables. ExciseR.com computes both automatically."
     video: /showcase.mp4
 
   - name: "Elena Rostova"

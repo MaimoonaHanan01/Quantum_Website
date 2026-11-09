@@ -1,6 +1,6 @@
 ---
 title: "Pricing"
-meta_title: "Pricing - Quantum Sales Tax & Excise Automation"
+meta_title: "Pricing - ExciseR.com — Bringing equilibrium to nuanced taxes"
 description: "Simple, transparent tiers for multi-state sales tax, vapor excise, and PACT Act automation."
 image: ""
 draft: false

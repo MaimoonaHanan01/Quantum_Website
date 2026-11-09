@@ -1,10 +1,10 @@
 ---
 enable: true
-badge: "Live Workspace"
+badge: "Bringing equilibrium to nuanced taxes"
 title: "Ready to Put Multi-State Tax & Excise on <strong>Autopilot?</strong>"
-description: "Open the live Quantum dashboard to inspect November 2026 returns, download 5-tab workbooks, and manage state portals."
+description: "Open the live ExciseR.com dashboard to inspect November 2026 returns, download 5-tab workbooks, and manage state portals."
 button:
   enable: true
-  label: "Launch Quantum Dashboard"
+  label: "Launch ExciseR.com"
   link: "https://maxvapor-tax.vercel.app/"
 ---
